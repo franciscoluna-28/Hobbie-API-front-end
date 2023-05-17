@@ -1,5 +1,5 @@
 import useFetch from "../hooks/useFetch"
-import { BsFillPeopleFill, BsPeopleFill } from "react-icons/bs"
+import { BsFillPeopleFill } from "react-icons/bs"
 import { SiLevelsdotfyi } from "react-icons/si"
 import {FaMoneyBillAlt} from "react-icons/fa"
 
@@ -57,6 +57,8 @@ export interface HobbieAPIResponse {
   data: CustomActivity[]
 }
 
+
+/* https://www.bugatti.com/fileadmin/_processed_/e/e/csm_og-image_506cf6a92e.jpg */
  const myImages = [
     {
       "key": "1",
@@ -94,7 +96,7 @@ export interface HobbieAPIResponse {
 
 export default function Activities() {
 
-/*      const {response, error, isLoading } = useFetch("http://localhost:3000/activity/get-a-few-activities") 
+      const {response, error, isLoading } = useFetch("http://localhost:3000/activity/get-a-few-activities") 
 
      if (isLoading) {
         return <div>Cargando...</div>;
@@ -106,23 +108,23 @@ export default function Activities() {
 
 
       console.log(response)
- */
+ 
 
 
     return (
 <div>
 <div className="flex gap-4">
-      {myImages.map((activityData) => (
+      {response?.data.map((activityData) => (
         <article key={activityData.key} className="bg-white shadow-md border-2 rounded-lg overflow-hidden min-h-fit hover:scale-105 duration-200 h-full max-w-xl">
-          <img className="w-auto h-full" src="https://www.bugatti.com/fileadmin/_processed_/e/e/csm_og-image_506cf6a92e.jpg"></img>
+          <img className="w-auto h-full" src={activityData.image?.urls?.regular}></img>
           <div className="p-4">
           <h2 className="font-bold py-2 text-start text-4xl text-gray-900">{activityData.activity}</h2>
 
             <div className="flex gap-2 items-center">
             <div className="w-auto">
             <h5 className="text-start text-gray-400 mb-2 font-semibold">Category:</h5>
-            <div className="border-red-500 border-2 text-center p-2 rounded-xl w-full">
-              <p className="font-semibold text-red-500">{activityData.type}</p>
+            <div className="border-main border-2 text-center p-2 rounded-xl w-full">
+              <p className="font-semibold text-main">{activityData.type}</p>
             </div>
             </div>
             </div>
@@ -131,15 +133,15 @@ export default function Activities() {
             <li className="flex gap-2 items-center">
               <div className="w-full flex-col justify-center flex-wrap gap-4 mt-4">
                 <li className="flex items-center mb-2">
-                  <FaMoneyBillAlt className="mt-1 mr-2 text-red-500"/>
+                  <FaMoneyBillAlt className="mt-1 mr-2 text-main"/>
                   <h5 className="text-gray-400 font-normal text-xl">Cost range: {activityData.price} / 1</h5>
                   </li>
                 <li className="flex items-center mb-2">
-                  <SiLevelsdotfyi className="mt-1 mr-2 text-red-500"/>
+                  <SiLevelsdotfyi className="mt-1 mr-2 text-main"/>
                   <h5 className="text-gray-400 font-normal text-xl">Accesibility: {activityData.accessibility} / 1</h5>
                   </li>
                 <li className="flex items-center">
-                  <BsFillPeopleFill className="mt-1 mr-2 text-red-500"/>
+                  <BsFillPeopleFill className="mt-1 mr-2 text-main"/>
                   <h5 className="text-gray-400 font-normal text-xl">Participants: {activityData.participants}</h5>
                   </li>
 
@@ -149,7 +151,7 @@ export default function Activities() {
 
             </li>
           </ul>
-          <button className="text-white font-semibold bg-red-500 px-4 my-4 py-2 text-red-500 rounded-lg text-xl w-full">See the image</button>
+          <button className="text-white font-semibold bg-main px-4 my-4 py-2 rounded-lg text-xl w-full">See the image</button>
 
         </div>
         </article>
