@@ -1,15 +1,27 @@
 import './App.css'
-import Activities from './components/Activities'
+import RecomendedActivities from './pages/RecommendedActivities'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { ToastContainer } from 'react-toastify'
+import Sidebar from './components/Sidebar'
+import SavedActivies from './pages/SavedActivities';
 
 function App() {
 
 
   return (
-    <>
-    <h1 className="text-main text-4xl font-bold">Hobbie API</h1>
-    <Activities/>
+  <>
+
+    <BrowserRouter>
+    <Sidebar/>
+      <Routes>
+        <Route path="/" element={<RecomendedActivities/>}/>
+          <Route path="/my-activities" element={<SavedActivies />} />
+      </Routes>
+      <ToastContainer/>
+    </BrowserRouter>
+
     </>
-  )
-}
+    )}
+
 
 export default App
