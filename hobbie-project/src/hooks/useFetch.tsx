@@ -1,4 +1,4 @@
-import { HobbieAPIResponse } from "../components/Activities"
+import { HobbieAPIResponse } from "../pages/RecommendedActivities"
 
 import { useEffect, useState } from "react"
 
