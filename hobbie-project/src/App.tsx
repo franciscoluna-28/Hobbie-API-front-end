@@ -12,7 +12,6 @@ function App() {
   <>
 
     <BrowserRouter>
-    <Sidebar/>
       <Routes>
         <Route path="/" element={<RecomendedActivities/>}/>
           <Route path="/my-activities" element={<SavedActivies />} />
