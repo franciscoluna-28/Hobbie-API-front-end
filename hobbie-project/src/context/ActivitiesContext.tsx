@@ -2,6 +2,7 @@ import { createContext, useState, useEffect, useContext } from "react";
 import useFetch from "../hooks/useFetch";
 import { CustomActivity } from "../components/Activity";
 import { toast } from "react-toastify";
+import { ActivityType } from "../components/Activity";
 
 interface ActivityContextProps {
   activities: CustomActivity[];
@@ -10,6 +11,9 @@ interface ActivityContextProps {
   deleteActivity: (activityId: string) => void;
   savedActivities: CustomActivity[];
   saveActivity: (activityId: string) => void;
+  filterActivities: (type: ActivityType) => void;
+  filterRecommendedActivities: (type: ActivityType) => void;
+  filteredActivities: CustomActivity[];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -26,6 +30,9 @@ interface ActivityProviderProps {
 export const ActivityProvider = ({ children }: ActivityProviderProps) => {
   const [activities, setActivities] = useState<CustomActivity[]>([]);
   const [savedActivities, setSavedActivities] = useState<CustomActivity[]>([]);
+  const [filteredActivities, setFilteredActivities] = useState<
+    CustomActivity[]
+  >([]);
 
   // Getting the API response
   const { response, error, isLoading } = useFetch(
@@ -48,7 +55,9 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
   };
 
   const saveActivity = (activityID: string) => {
-    const activityToSave = activities.find((activity) => activity.id === activityID);
+    const activityToSave = activities.find(
+      (activity) => activity.id === activityID
+    );
     if (activityToSave) {
       toast.success("🦄 Wow you have saved your first activity!", {
         position: "top-right",
@@ -66,12 +75,35 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
       ]);
     }
 
-  
     console.log(savedActivities);
   };
 
+  // Function to filter activities based on type
+  const filterActivities = (type: string) => {
+    if (type === "") {
+      setFilteredActivities(activities);
+    } else {
+      const filtered = activities.filter((activity) => activity.type === type);
+      setFilteredActivities(filtered);
+    }
+  };
 
-  
+  // Function to filter recommended activities based on type
+  const filterRecommendedActivities = async (type: ActivityType) => {
+    let filtered: CustomActivity[] = [];
+    try {
+      const response = await fetch(
+        `http://localhost:3000/activity/get-activity-by-type/${type}`
+      );
+      console.log(response)
+      const data = await response.json();
+      filtered = data.data;
+    } catch (error) {
+      console.log("Error while filtering activities:", error);
+    }
+
+    setFilteredActivities(filtered);
+  };
 
   // Context object
   const activityContextValue: ActivityContextProps = {
@@ -81,6 +113,9 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
     deleteActivity,
     savedActivities,
     saveActivity,
+    filterActivities,
+    filteredActivities,
+    filterRecommendedActivities,
   };
 
   return (
