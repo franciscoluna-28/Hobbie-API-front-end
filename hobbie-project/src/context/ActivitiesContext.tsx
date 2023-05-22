@@ -5,7 +5,9 @@ import { toast } from "react-toastify";
 import { ActivityType } from "../components/Activity";
 
 interface ActivityContextProps {
-  activities: CustomActivity[];
+  activities: CustomActivity[]; 
+  currentKeyword: string;
+  setCurrentKeyword: (keyword: string) => void;
   isLoading: boolean;
   error: boolean;
   deleteActivity: (activityId: string) => void;
@@ -33,6 +35,7 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
   const [filteredActivities, setFilteredActivities] = useState<
     CustomActivity[]
   >([]);
+  const [currentKeyword, setCurrentKeyword] = useState<string>("");
 
   // Getting the API response
   const { response, error, isLoading } = useFetch(
@@ -89,20 +92,22 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
   };
 
   // Function to filter recommended activities based on type
-  const filterRecommendedActivities = async (type: ActivityType) => {
+  const filterRecommendedActivities = async (type: any) => {
     let filtered: CustomActivity[] = [];
     try {
       const response = await fetch(
         `http://localhost:3000/activity/get-activity-by-type/${type}`
       );
-      console.log(response)
+      console.log(response);
       const data = await response.json();
       filtered = data.data;
+      console.log(filtered);
+      setFilteredActivities(filtered);
+
+      console.log(filteredActivities);
     } catch (error) {
       console.log("Error while filtering activities:", error);
     }
-
-    setFilteredActivities(filtered);
   };
 
   // Context object
@@ -116,6 +121,8 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
     filterActivities,
     filteredActivities,
     filterRecommendedActivities,
+    currentKeyword,
+    setCurrentKeyword,
   };
 
   return (
