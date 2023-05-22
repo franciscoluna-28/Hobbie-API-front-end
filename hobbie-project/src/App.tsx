@@ -1,9 +1,7 @@
 import './App.css'
-import RecomendedActivities from './pages/RecommendedActivities'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from 'react-toastify'
-import Sidebar from './components/Sidebar'
-import SavedActivies from './pages/SavedActivities';
+import Activities from './components/Actitivites';
 
 function App() {
 
@@ -13,8 +11,8 @@ function App() {
 
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<RecomendedActivities/>}/>
-          <Route path="/my-activities" element={<SavedActivies />} />
+        <Route path="/" element={<Activities/>}/>
+
       </Routes>
       <ToastContainer/>
     </BrowserRouter>
