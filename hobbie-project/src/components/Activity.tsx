@@ -1,8 +1,11 @@
 import { BsFillPeopleFill } from "react-icons/bs";
 import { SiLevelsdotfyi } from "react-icons/si";
-import { FaMoneyBillAlt } from "react-icons/fa";
+import { FaBookmark, FaMoneyBillAlt } from "react-icons/fa";
 import { useActivityContext } from "../context/ActivitiesContext";
-
+import { BiWorld } from "react-icons/bi"
+import { BiMoney } from "react-icons/bi";
+import { FaUnsplash } from "react-icons/fa";
+import { MdOutlineDownloadDone } from "react-icons/md"
 
 // Enums
 export enum ActivityType {
@@ -71,70 +74,61 @@ export default function Activity({
 
   return (
     <article
-      className="bg-white shadow-md border-2 rounded-lg overflow-hidden min-h-fit h-full max-w-xl"
+      className="bg-white shadow-md border-2 rounded-lg overflow-hidden h-fit max-w-xl hover:shadow-2xl duration-200"
     >
       <img
-        className="w-auto h-full"
-        src={image?.urls?.regular}
+        className="h-96 w-full bg-cover relative"
+        src={image?.urls?.small}
         alt="Activity"
       ></img>
-      <div className="p-4">
-        <h2 className="font-bold py-2 text-start text-4xl text-gray-900">
+         <button
+          onClick={() => saveActivity(id)}
+          disabled={savedActivities.some(
+            (activity) => activity.id === id
+          )}
+          className="hover:brightness-90 bg-white absolute duration-200 text-white font-semibold disabled:brightness-75 px-4 my-4 py-2 -translate-y-96 translate-x-4 text-xl w-24 h-24 rounded-full"
+        >
+          {savedActivities.find(
+            (activity) => activity.id === id
+          )
+            ? <MdOutlineDownloadDone className="text-main relative text-5xl m-auto"/>
+            : <FaBookmark className="text-main relative text-3xl m-auto"/>}
+        </button>
+      <div className="p-6 bg-accent">
+        <h2 className="font-bold py-2 text-start text-4xl text-white">
           {activity}
         </h2>
         <div className="flex gap-2 items-center">
           <div className="w-auto">
-            <h5 className="text-start text-gray-400 mb-2 font-semibold">
+            <h5 className="text-start text-white/70 mb-2 font-normal py-2">
               Category:
             </h5>
             <div className="border-main border-2 text-center p-2 rounded-xl w-full">
-              <p className="font-semibold text-main first-letter:capitalize">
+              <p className="font-semibold text-white first-letter:capitalize">
                 {type}
               </p>
             </div>
           </div>
         </div>
-        <ul>
-          <li className="flex gap-2 items-center">
-            <div className="w-full flex-col justify-center flex-wrap gap-4 mt-4">
-              <div className="flex items-center mb-2">
-                <FaMoneyBillAlt className="mt-1 mr-2 text-main" />
-                <h5 className="text-gray-400 font-normal text-xl">
-                  Cost range: {price} / 1
-                </h5>
-              </div>
-              <div className="flex items-center mb-2">
-                <SiLevelsdotfyi className="mt-1 mr-2 text-main" />
-                <h5 className="text-gray-400 font-normal text-xl">
-                  Accessibility: {id} / 1
-                </h5>
-              </div>
-              <div className="flex items-center">
-                <BsFillPeopleFill className="mt-1 mr-2 text-main" />
-                <h5 className="text-gray-400 font-normal text-xl">
-                  Participants: {participants}
-                </h5>
-              </div>
-            </div>
-          </li>
+        <ul className="py-4 flex gap-6 mt-2">
+        <li className="flex gap-2 items-center">
+        <BiWorld className="text-white text-2xl"/>
+        <h5 className="text-white text-xl font-semibold">{accessibility}</h5>
+        </li>
+        <li className="flex gap-2 items-center">
+        <FaMoneyBillAlt className="text-white text-2xl"/>
+        <h5 className="text-white text-xl font-semibold">{price}</h5>
+        </li>
+        <li className="flex gap-2 items-center">
+        <BsFillPeopleFill className="text-white text-2xl"/>
+        <h5 className="text-white text-xl font-semibold">{participants}</h5>
+        </li>
         </ul>
-        <button className="text-white cursor-pointer font-semibold bg-main px-4 my-4 py-2 rounded-lg text-xl w-full">
-          See the image
-        </button>
-        <button
-          onClick={() => saveActivity(id)}
-          disabled={savedActivities.some(
-            (activity) => activity.id === id
-          )}
-          className="cursor-pointer hover:brightness-90 duration-200 text-white font-semibold disabled:brightness-75 bg-main px-4 my-4 py-2 rounded-lg text-xl w-full"
-        >
-          {savedActivities.find(
-            (activity) => activity.id === id
-          )
-            ? "Activity Saved"
-            : "Save this activity"}
-        </button>
-        <p>Image by </p> <a>{image?.user?.name}</a>
+        <a href={image?.urls?.full}><button className="text-white flex justify-center items-center gap-2 cursor-pointer font-semibold bg-main px-4 my-4 py-4 rounded-lg text-2xl w-full hover:brightness-90 duration-100">
+          See the image <FaUnsplash/>
+        </button></a>
+
+        <a href={image?.user?.links.self}><p className="text-gray-400 flex">Photo by {image?.user?.name}</p></a>
         <p>{}</p>
       </div>
     </article>
