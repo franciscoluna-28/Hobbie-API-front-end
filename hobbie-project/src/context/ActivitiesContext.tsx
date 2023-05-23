@@ -62,7 +62,7 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
       (activity) => activity.id === activityID
     );
     if (activityToSave) {
-      toast.success("🦄 Wow you have saved your first activity!", {
+      toast.success("🦄 Wow you have saved a new activity!", {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
