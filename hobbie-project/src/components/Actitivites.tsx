@@ -7,8 +7,8 @@ export default function Activities() {
   const { currentKeyword } = useActivityContext();
   
   return (
-    <div>
-      <h1 className="text-4xl text-gray-950 font-bold mb-8">Recommended Activities</h1>
+    <div className="p-8">
+      <h2 className="text-6xl text-accent font-bold mb-8 flex gap-4">Recommended <h1 className="flex text-main">Activities</h1></h2>
       <CategoriesDropdown />
       <div className="flex gap-4">
         {currentKeyword === "" ? (
