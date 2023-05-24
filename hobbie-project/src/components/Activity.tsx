@@ -81,19 +81,19 @@ export default function Activity({
         src={image?.urls?.small}
         alt="Activity"
       ></img>
-         <button
-          onClick={() => saveActivity(id)}
-          disabled={savedActivities.some(
-            (activity) => activity.id === id
-          )}
-          className="hover:brightness-90 bg-white absolute duration-200 text-white font-semibold disabled:brightness-75 px-4 my-4 py-2 -translate-y-96 translate-x-4 text-xl w-24 h-24 rounded-full"
-        >
-          {savedActivities.find(
-            (activity) => activity.id === id
-          )
-            ? <MdOutlineDownloadDone className="text-main relative text-5xl m-auto"/>
-            : <FaBookmark className="text-main relative text-3xl m-auto"/>}
-        </button>
+      <button
+        onClick={() => saveActivity(id)}
+        disabled={savedActivities.some(
+          (activity) => activity.id === id
+        )}
+        className="hover:brightness-90 bg-white absolute duration-200 text-white font-semibold disabled:brightness-75 px-4 my-4 py-2 -translate-y-96 translate-x-4 text-xl w-24 h-24 rounded-full"
+      >
+        {savedActivities.find(
+          (activity) => activity.id === id
+        )
+          ? <MdOutlineDownloadDone className="text-main relative text-5xl m-auto" />
+          : <FaBookmark className="text-main relative text-3xl m-auto" />}
+      </button>
       <div className="p-6 bg-accent">
         <h2 className="font-bold py-2 text-start text-4xl text-white">
           {activity}
@@ -111,25 +111,25 @@ export default function Activity({
           </div>
         </div>
         <ul className="py-4 flex gap-6 mt-2">
-        <li className="flex gap-2 items-center">
-        <BiWorld className="text-white text-2xl"/>
-        <h5 className="text-white text-xl font-semibold">{accessibility}</h5>
-        </li>
-        <li className="flex gap-2 items-center">
-        <FaMoneyBillAlt className="text-white text-2xl"/>
-        <h5 className="text-white text-xl font-semibold">{price}</h5>
-        </li>
-        <li className="flex gap-2 items-center">
-        <BsFillPeopleFill className="text-white text-2xl"/>
-        <h5 className="text-white text-xl font-semibold">{participants}</h5>
-        </li>
+          <li className="flex gap-2 items-center">
+            <BiWorld className="text-white text-2xl" />
+            <h5 className="text-white text-xl font-semibold">{accessibility}</h5>
+          </li>
+          <li className="flex gap-2 items-center">
+            <FaMoneyBillAlt className="text-white text-2xl" />
+            <h5 className="text-white text-xl font-semibold">{price}</h5>
+          </li>
+          <li className="flex gap-2 items-center">
+            <BsFillPeopleFill className="text-white text-2xl" />
+            <h5 className="text-white text-xl font-semibold">{participants}</h5>
+          </li>
         </ul>
         <a href={image?.urls?.full}><button className="text-white flex justify-center items-center gap-2 cursor-pointer font-semibold bg-main px-4 my-4 py-4 rounded-lg text-2xl w-full hover:brightness-90 duration-100">
-          See the image <FaUnsplash/>
+          See the image <FaUnsplash />
         </button></a>
 
         <a href={image?.user?.links.self}><p className="text-gray-400 flex">Photo by {image?.user?.name}</p></a>
-        <p>{}</p>
+        <p>{ }</p>
       </div>
     </article>
   );
