@@ -8,6 +8,7 @@ export default function TempNavbar(){
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/my-activities">Saved Activities</Link></li>
                     <li><Link to="/my-profile">Profile</Link></li>
+                    <li><Link to="/my-profile">Profile test</Link></li>
                 </ul>
             </div>
         </div>
