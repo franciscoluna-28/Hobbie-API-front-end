@@ -74,10 +74,10 @@ export default function Activity({
 
   return (
     <article
-      className="bg-white shadow-md border-2 rounded-lg overflow-hidden h-fit max-w-xl hover:shadow-2xl duration-200"
+      className="bg-white shadow-md border-2 rounded-lg overflow-hidden h-fit max-w-md hover:shadow-2xl duration-200"
     >
       <img
-        className="h-96 w-full bg-cover relative"
+        className="h-96 w-full bg-contain relative"
         src={image?.urls?.small}
         alt="Activity"
       ></img>
