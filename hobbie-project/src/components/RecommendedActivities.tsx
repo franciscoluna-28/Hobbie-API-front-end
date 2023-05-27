@@ -1,11 +1,11 @@
+import { motion } from "framer-motion";
 import { useActivityContext } from "../context/ActivitiesContext";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import Activity from "./Activity";
 import { CustomActivity } from "./Activity";
-import CategoriesDropdown from "./CategoriesDropdown";
 
 export interface HobbieAPIResponse {
-  data: CustomActivity[]
+  data: CustomActivity[];
 }
 
 export default function RecomendedActivities() {
@@ -21,13 +21,19 @@ export default function RecomendedActivities() {
 
   return (
     <div>
-             <div className="flex gap-4">
+      <div className="flex gap-4">
         {activities.map((activityData: CustomActivity) => (
-          <Activity {...activityData} key={activityData.id} />
+          <motion.div
+            key={activityData.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Activity {...activityData} />
+          </motion.div>
         ))}
       </div>
-      </div>
-
+    </div>
   );
-  
 }
