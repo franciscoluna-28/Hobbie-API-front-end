@@ -1,7 +1,7 @@
 import { useActivityContext } from "../context/ActivitiesContext"
 import Activity from "./Activity";
 import { CustomActivity } from "./Activity";
-import TempNavbar from "./tempNavbar";
+import TempNavbar from "./Navbar";
 
 
 
