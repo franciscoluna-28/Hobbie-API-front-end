@@ -1,8 +1,8 @@
 import useFetch from "../hooks/useFetch"
 import { useEffect, useState } from "react"
 import { CustomActivity } from "./Activity";
-import CategoriesDropdown from "./CategoriesDropdown";
 import Activity from "./Activity";
+import { motion } from "framer-motion";
 
 
 
@@ -34,8 +34,17 @@ export default function FilteredActivitiesByCategory({currentKeyword}: FilteredA
         <>
 
           {filteredActivities.map((activityData: CustomActivity) => (
+                      <motion.div
+                      key={activityData.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.3 }}
+                    >
             <Activity {...activityData} key={activityData.id} />
+            </motion.div>
           ))}
+
       </>
     )
 }
