@@ -42,22 +42,27 @@ export default function Login() {
 
     return(
         <>
-    <div>
-    <div>
+    <div className="flex justify-center py-8">
+    <div className="flex flex-col gap-12">
       <input ref={emailRef} placeholder="Email" />
       <input ref={passwordRef} type="password" placeholder="Password" />
+      <div className="flex gap-4">
       <button disabled={loading || currentUser} onClick={handleSignup}>
         Sign up
       </button>
       <button disabled={loading || currentUser} onClick={handleLogin}>
         Login
       </button>
-    </div>
+
 
     <button disabled={loading || !currentUser} onClick={handleLogout}>
       Log out
     </button>
+    </div>
+
+    </div>
   </div>
+  
   </>
     )
 }
