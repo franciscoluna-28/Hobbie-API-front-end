@@ -11,7 +11,8 @@ export default {
     extend: {
       colors: {
         main: "#00C9A7",
-        accent: "#12141A",
+/*         accent: "#12141A", */
+        accent: "#ffffff",
         accentHover: "#343a4b"
       },
 

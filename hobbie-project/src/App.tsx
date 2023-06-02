@@ -14,10 +14,10 @@ import { Outlet } from 'react-router-dom';
 
 function App() {
   const { currentUser } = useAuthContext();
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const PrivateWrapper = ({ currentUser }: any) => {
-  return currentUser ? <Outlet /> : <Navigate to="/login" />;
-};
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const PrivateWrapper = ({ currentUser }: any) => {
+    return currentUser ? <Outlet /> : <Navigate to="/login" />;
+  };
 
   return (
     <>
@@ -25,12 +25,12 @@ const PrivateWrapper = ({ currentUser }: any) => {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route element={<PrivateWrapper currentUser={currentUser} />}>
-  <Route path="/find-activities" element={<Activities />} />
-</Route><Route element={<PrivateWrapper currentUser={currentUser} />}>
-  <Route path="/saved-activities" element={<SavedActivities />} />
-</Route><Route element={<PrivateWrapper currentUser={currentUser} />}>
-  <Route path="/my-profile" element={<UserProfile/>} />
-</Route>
+            <Route path="/find-activities" element={<Activities />} />
+          </Route><Route element={<PrivateWrapper currentUser={currentUser} />}>
+            <Route path="/saved-activities" element={<SavedActivities />} />
+          </Route><Route element={<PrivateWrapper currentUser={currentUser} />}>
+            <Route path="/my-profile" element={<UserProfile />} />
+          </Route>
         </Routes>
 
         <ToastContainer />
