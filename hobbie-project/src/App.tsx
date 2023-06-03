@@ -19,7 +19,7 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route element={<PrivateWrapper currentUser={currentUser} />}>
             <Route path="/find-activities" element={<Activities />} />
           </Route><Route element={<PrivateWrapper currentUser={currentUser} />}>
