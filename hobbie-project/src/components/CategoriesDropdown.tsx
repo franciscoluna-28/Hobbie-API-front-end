@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { ActivityType } from "./Activity";
 import { useActivityContext } from "../context/ActivitiesContext";
+import {AiOutlineCaretDown} from "react-icons/ai";
 
 const categoryOptions = [
   { value: "", label: "All" },
@@ -29,22 +30,31 @@ export default function CategoriesDropdown() {
 
   return (
     <>
-      <label htmlFor="activityType" className="text-gray-400 text-xl">
+      <label htmlFor="activityType" className="text-gray-400 text-lg flex">
         Filter Activities by Category
       </label>
-      <select
-        name="activityType"
-        id="activityType"
-        value={currentKeyword}
-        onChange={handleFilterChange}
-        className="mb-4 bg-main mt-4 text-white p-4 flex rounded-lg text-xl font-bold"
-      >
-        {categoryOptions.map((option) => (
-          <option className="bg-white text-black/70 appearance-none text-center my-2 border-none block py-4" key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
-      </select>
+      <div className="relative group inline-block mt-4 mb-8">
+        <select
+          name="activityType"
+          id="activityType"
+          value={currentKeyword}
+          onChange={handleFilterChange}
+          className="bg-main text-white p-4 pr-10 flex hover:brightness-75 rounded-lg appearance-none text-xl font-bold"
+        >
+          {categoryOptions.map((option) => (
+            <option
+              className="bg-white text-black/70 appearance-none text-center my-2 border-none block py-4"
+              key={option.value}
+              value={option.value}
+            >
+              {option.label}
+            </option>
+          ))}
+        </select>
+        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
+          <AiOutlineCaretDown className="-translate-x-2 group-hover:brightness-75 h-4 w-4 font-bold text-xl scale-125" />
+        </div>
+      </div>
     </>
   );
 }
