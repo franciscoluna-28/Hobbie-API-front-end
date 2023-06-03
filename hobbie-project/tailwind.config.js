@@ -12,7 +12,8 @@ export default {
       colors: {
         main: "#00C9A7",
 /*         accent: "#12141A", */
-        accent: "#ffffff",
+        accent: "#12141A",
+
         accentHover: "#343a4b"
       },
 
