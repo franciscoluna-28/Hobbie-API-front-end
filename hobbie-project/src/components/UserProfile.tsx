@@ -12,7 +12,6 @@ export default function UserProfile(){
                 <TempNavbar/>
             <h2>Profile</h2>
             <h3>Email: {currentUser?.email}</h3>
-            <h3>Email: {currentUser?.metadata.creationTime}</h3>
             
         </div>
     )
