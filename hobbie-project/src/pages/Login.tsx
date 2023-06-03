@@ -9,6 +9,8 @@ export default function Login() {
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const [loading, setLoading] = useState(false);
 
+  console.log(loading)
+
   async function handleLogin() {
     try {
       if (emailRef.current && passwordRef.current) {

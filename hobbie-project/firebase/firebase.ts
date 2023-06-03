@@ -34,3 +34,4 @@ export function login(email: string, password: string){
 }
 
 const analytics = getAnalytics(app);
+console.log(analytics)

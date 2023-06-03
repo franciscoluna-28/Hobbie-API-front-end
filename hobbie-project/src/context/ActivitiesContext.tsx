@@ -10,7 +10,7 @@ interface ActivityContextProps {
   setCurrentKeyword: (keyword: string) => void;
   isLoading: boolean;
   error: boolean;
-  deleteActivity: (activityId: string) => void;
+/*   deleteActivity: (activityId: string) => void; */
   savedActivities: CustomActivity[];
   saveActivity: (activityId: string) => void;
   filterActivities: (type: ActivityType) => void;
@@ -53,9 +53,9 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
   }, [savedActivities]);
 
   // Function to delete activity according to its id
-  const deleteActivity = (activityKey: string) => {
+/*   const deleteActivity = (activityKey: string) => {
     // TODO delete the actual activity lol
-  };
+  }; */
 
   const saveActivity = (activityID: string) => {
     const activityToSave = activities.find(
@@ -115,7 +115,7 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
     activities,
     isLoading,
     error,
-    deleteActivity,
+/*  */
     savedActivities,
     saveActivity,
     filterActivities,

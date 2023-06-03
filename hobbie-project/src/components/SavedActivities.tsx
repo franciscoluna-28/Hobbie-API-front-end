@@ -7,7 +7,7 @@ import TempNavbar from "./Navbar";
 
 
 export default function SavedActivies() {
-  const { savedActivities, deleteActivity } = useActivityContext();
+  const { savedActivities } = useActivityContext();
 
   return (
     <>
@@ -21,7 +21,7 @@ export default function SavedActivies() {
             {savedActivities.map((activityData: CustomActivity) => (
               <>
                 <Activity {...activityData} key={activityData.id} />
-                <button onClick={() => deleteActivity(activityData.id)}>test</button>
+{/*                 <button onClick={() => deleteActivity(activityData.id)}>test</button> */}
               </>
             ))}
           </div>
