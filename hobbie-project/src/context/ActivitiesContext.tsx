@@ -39,7 +39,7 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
 
   // Getting the API response
   const { response, error, isLoading } = useFetch(
-    import.meta.env.VITE_APP_ACTIVITIES_ROUTES
+    "https://hobbie-api-project.onrender.com/activity/get-a-few-activities"
   );
 
   useEffect(() => {
@@ -96,7 +96,7 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
     let filtered: CustomActivity[] = [];
     try {
       const response = await fetch(
-        `http://localhost:3000/activity/get-activity-by-type/${type}`
+        `https://hobbie-api-project.onrender.com/activity/get-activity-by-type/${type}`
       );
       console.log(response);
       const data = await response.json();
