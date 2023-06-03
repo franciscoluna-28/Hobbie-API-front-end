@@ -64,7 +64,6 @@ export default function Activity({
   activity,
   type,
   price,
-/*   link, */
   id,
   accessibility,
   image,
