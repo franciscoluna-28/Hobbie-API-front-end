@@ -3,47 +3,58 @@ import { BsFillBookmarksFill } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../context/UserAuthContext";
+import { ImExit } from "react-icons/im";
 
 export default function Sidebar() {
   const { handleLogout } = useAuthContext();
   return (
-    <aside className="w-min-full bg-accent shadow-lg min-h-screen max-w-screen-sm px-4 py-8">
-      <h5 className="text-gray-700 font-medium text-xl px-4">Activities</h5>
+    <aside className="w-min-full bg-white shadow-lg min-h-screen max-w-screen-sm px-8 py-8 border-r-2">
+      <div className="fixed">
+      <h5 className="text-accent/80 font-bold text-xl">Activities</h5>
       <ul className="py-2">
-        <li className="group hover:bg-accentHover/40 rounded-lg flex gap-2 items-center p-4">
-          <MdOutlineExplore className="text-gray-500 text-2xl group-hover:text-white" />
+        <li className="group hover:bg-main rounded-lg flex gap-2 items-center p-4">
+          <MdOutlineExplore className="text-accent/80 text-xl mb-1 group-hover:text-white" />
           <Link
             to="/find-activities"
-            className="text-gray-500 text-2xl font-medium group-hover:text-white"
+            className="text-xl text-accent/80 group-hover:text-white font-normal w-full"
           >
             Find Activities
           </Link>
         </li>
-        <li className="group hover:bg-accentHover/40 rounded-lg flex gap-2 items-center p-4">
-          <BsFillBookmarksFill className="text-gray-500 text-2xl group-hover:text-white" />
+        <li className="group hover:bg-main rounded-lg flex gap-2 items-center p-4">
+          <BsFillBookmarksFill className="text-accent/80 text-xl group-hover:text-white" />
           <Link
             to="/saved-activities"
-            className="text-gray-500 text-2xl font-medium group-hover:text-white"
+            className="text-accent/80 text-xl font-normal group-hover:text-white w-full"
           >
             Saved Activities
           </Link>
         </li>
       </ul>
-      <h5 className="text-gray-700 mt-4 font-semibold text-xl px-4">Me</h5>
+      <hr></hr>
+      <h5 className="text-accent/80 mt-4 font-bold text-xl">Me</h5>
       <ul className="py-2">
-        <li className="group hover:bg-accentHover/40 rounded-lg flex gap-2 items-center p-4">
-          <AiOutlineUser className="text-gray-500 text-2xl group-hover:text-white" />
+        <li className="group hover:bg-main rounded-lg flex gap-2 items-center p-4">
+          <AiOutlineUser className="text-accent/80 text-xl group-hover:text-white" />
           <Link
             to="/my-profile"
-            className="text-gray-500 text-2xl font-medium group-hover:text-white"
+            className="text-accent/80 text-xl font-normal group-hover:text-white"
           >
             My Profile
           </Link>
         </li>
-        <li className="group hover:bg-accentHover/40 rounded-lg flex gap-2 items-center p-4">
-          <button onClick={handleLogout}>Logout</button>
+        <li className="group hover:bg-main rounded-lg flex gap-2 items-center p-4">
+          <button
+            className="flex gap-2 group-hover:text-white text-accent/80 text-xl font-normal items-center"
+            onClick={handleLogout}
+          >
+            <ImExit />
+            Logout
+          </button>
         </li>
       </ul>
+      <hr></hr>
+      </div>
     </aside>
   );
 }
