@@ -39,7 +39,7 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
 
   // Getting the API response
   const { response, error, isLoading } = useFetch(
-    "http://localhost:3000/activity/get-a-few-activities"
+    import.meta.env.VITE_APP_ACTIVITIES_ROUTES
   );
 
   useEffect(() => {
