@@ -1,5 +1,5 @@
-import { createContext, useContext, useRef, useState } from "react";
-import { signup, logout, login } from "../../firebase/firebase";
+import { createContext, useContext } from "react";
+import { logout } from "../../firebase/firebase";
 import useAuth from "../hooks/useAuth";
 import { Navigate } from "react-router-dom";
 
