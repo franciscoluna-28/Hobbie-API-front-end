@@ -8,8 +8,8 @@ import { ImExit } from "react-icons/im";
 export default function Sidebar() {
   const { handleLogout } = useAuthContext();
   return (
-    <aside className="w-min-full bg-white shadow-lg min-h-screen max-w-screen-sm px-8 py-8 border-r-2">
-      <div className="fixed">
+    <aside className="bg-white shadow-lg min-h-screen w-full px-8 py-8 border-r-2">
+      <div className="sticky max-h-4 top-0 py-4">
       <h5 className="text-accent/80 font-bold text-xl">Activities</h5>
       <ul className="py-2">
         <li className="group hover:bg-main rounded-lg flex gap-2 items-center p-4">
