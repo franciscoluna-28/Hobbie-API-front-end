@@ -8,6 +8,7 @@ interface ActivityContextProps {
   activities: CustomActivity[]; 
   currentKeyword: string;
   setCurrentKeyword: (keyword: string) => void;
+  setFilteredActivities: (filteredActivities: CustomActivity[]) => void;
   isLoading: boolean;
   error: boolean;
 /*   deleteActivity: (activityId: string) => void; */
@@ -57,10 +58,10 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
     // TODO delete the actual activity lol
   }; */
 
-  const saveActivity = (activityID: string) => {
-    const activityToSave = activities.find(
-      (activity) => activity.id === activityID
-    );
+  const saveActivity = (activityID: string) => {  const activityToSave = activities.find(
+    (activity) => activity.id === activityID
+  ) || filteredActivities.find((activity) => activity.id === activityID);
+
     if (activityToSave) {
       toast.success("🦄 Wow you have saved a new activity!", {
         position: "top-right",
@@ -123,6 +124,7 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
     filterRecommendedActivities,
     currentKeyword,
     setCurrentKeyword,
+    setFilteredActivities
   };
 
   return (

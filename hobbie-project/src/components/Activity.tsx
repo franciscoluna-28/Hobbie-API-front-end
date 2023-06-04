@@ -78,19 +78,19 @@ export default function Activity({
   };
 
   return (
-    <article className="bg-white min-w-full shadow-md border-2 rounded-lg overflow-hidden w-full h-fit max-w-md hover:shadow-2xl duration-200">
+    <article className="bg-white min-w-full relative shadow-md border-2 rounded-lg overflow-hidden w-full h-fit max-w-md hover:shadow-2xl duration-200">
       <img
-        className="h-96 w-full bg-contain relative"
+        className="w-full h-auto bg-contain relative"
         src={image?.urls?.small}
         alt="Activity"
       ></img>
       <button
         onClick={() => saveActivity(id)}
         disabled={savedActivities.some((activity) => activity.id === id)}
-        className="hover:brightness-90 bg-white absolute duration-200 text-white font-semibold disabled:brightness-75 px-4 my-4 py-2 -translate-y-96 translate-x-4 text-xl w-24 h-24 rounded-full"
+        className="hover:brightness-90 bg-white absolute z-50 left-4 top-0 duration-200 text-white font-semibold disabled:brightness-75 px-4 my-4 py-2 text-xl w-24 h-24 rounded-full"
       >
         {savedActivities.find((activity) => activity.id === id) ? (
-          <MdOutlineDownloadDone className="text-main relative text-5xl m-auto" />
+          <MdOutlineDownloadDone className="text-main  text-5xl m-auto" />
         ) : (
           <FaBookmark className="text-main relative text-3xl m-auto" />
         )}
@@ -124,6 +124,7 @@ export default function Activity({
           </motion.div>
           Show more
         </button>
+
         <AnimatePresence>
           {showMore && (
             <motion.div

@@ -3,23 +3,28 @@ import { useEffect, useState } from "react"
 import { CustomActivity } from "./Activity";
 import Activity from "./Activity";
 import { motion } from "framer-motion";
+import { useActivityContext } from "../context/ActivitiesContext";
 
 
 
 interface FilteredActivitiesByCategoryProps{
-    currentKeyword: string;
+    currentKeyword: string
 }
 
 export default function FilteredActivitiesByCategory({currentKeyword}: FilteredActivitiesByCategoryProps){
     const { response, error, isLoading } = useFetch(`http://localhost:3000/activity/get-activity-by-type/${currentKeyword}`)
-    const [ filteredActivities, setFilteredActivities] = useState<any>([])
+    const {filteredActivities, setFilteredActivities} = useActivityContext();
 
+
+
+
+    
     useEffect(() => {
         if (response) {
           setFilteredActivities(response.data);
           console.log(filteredActivities);
         }
-      }, [filteredActivities, response]);
+      }, [filteredActivities, response, setFilteredActivities]);
 
 
     if (isLoading) {

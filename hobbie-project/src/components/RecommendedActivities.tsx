@@ -43,7 +43,7 @@ export default function RecomendedActivities() {
 
   return (
     <div>
-      <div className="lg:grid lg:grid-flow-col lg:gap-4 lg:col-span-2 flex flex-wrap">
+      <div className="flex flex-wrap gap-4">
         {activities.map((activityData: CustomActivity) => (
           <motion.div
             key={activityData.id}
@@ -52,7 +52,7 @@ export default function RecomendedActivities() {
             exit={{ opacity: 0, y: -20 }}
             transition={{ duration: 0.3 }}
           >
-            <Activity {...activityData} />
+            <Activity {...activityData} key={activityData.id} />
           </motion.div>
         ))}
       </div>

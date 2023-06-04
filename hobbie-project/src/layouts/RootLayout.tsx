@@ -12,7 +12,7 @@ export default function RootLayout() {
         <div className="lg:grid-span-1 hidden lg:block ">
           <Sidebar />
         </div>
-        <div className="lg:col-span-4 container p-12 flex">
+        <div className="lg:col-span-4 container p-8 flex">
           <Outlet />
         </div>
       </div>
