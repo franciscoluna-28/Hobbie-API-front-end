@@ -10,16 +10,14 @@ export default function Activities() {
 
   return (
     <>
-      <div className="grid grid-flow-col">
-        <Sidebar />
         <motion.div
-          className="p-12"
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.3 }}
-        >
-          <h2 className="text-6xl text-accent font-bold mb-8 flex gap-4">
-            Recommended <h1 className="flex text-main">Activities</h1>
+          
+          >
+          <h2 className="lg:text-6xl text-5xl text-accent font-bold mb-8 lg:flex gap-4">
+            Recommended <h1 className="lg:flex text-5xl lg:text-6xl mt-4 lg:mt-0 text-main">Activities</h1>
           </h2>
           <CategoriesDropdown />
           <motion.div
@@ -35,7 +33,6 @@ export default function Activities() {
             )}
           </motion.div>
         </motion.div>
-      </div>
     </>
   );
 }
