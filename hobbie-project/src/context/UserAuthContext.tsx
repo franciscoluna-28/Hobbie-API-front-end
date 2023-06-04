@@ -38,7 +38,7 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
   async function handleLogout() {
     try {
       await logout();
-      <Navigate to="login"></Navigate>
+      <Navigate to="/" replace={true}></Navigate>
     } catch {
       alert("Error!");
 
