@@ -3,8 +3,8 @@ import { useActivityContext } from "../context/ActivitiesContext";
 import "react-toastify/dist/ReactToastify.css";
 import Activity from "./Activity";
 import { CustomActivity } from "./Activity";
-import useFetch from "../hooks/useFetch";
-import { useState, useEffect } from "react"
+/* import useFetch from "../hooks/useFetch";
+import { useState, useEffect } from "react" */
 
 
 export interface HobbieAPIResponse {

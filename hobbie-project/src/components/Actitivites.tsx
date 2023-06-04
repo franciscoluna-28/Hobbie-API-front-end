@@ -3,7 +3,6 @@ import { useActivityContext } from "../context/ActivitiesContext";
 import CategoriesDropdown from "./CategoriesDropdown";
 import FilteredActivitiesByCategory from "./FilteredActivitiesByCategory";
 import RecomendedActivities from "./RecommendedActivities";
-import Sidebar from "./Sidebar";
 
 export default function Activities() {
   const { currentKeyword } = useActivityContext();

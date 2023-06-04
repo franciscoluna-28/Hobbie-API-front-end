@@ -4,12 +4,12 @@ import { AiOutlineUser } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../context/UserAuthContext";
 import { ImExit } from "react-icons/im";
-import { useState } from "react"
+/* import { useState } from "react" */
 import { useNavigate } from "react-router-dom";
 
 
 export default function Sidebar() {
-  const [isOpen, setIsOpen] = useState<boolean>(true);
+/*   const [isOpen, setIsOpen] = useState<boolean>(true); */
 
   const navigate = useNavigate();
 
