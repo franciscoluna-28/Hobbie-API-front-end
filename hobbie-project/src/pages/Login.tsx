@@ -41,11 +41,11 @@ export default function Login() {
 
   if (currentUser) {
     return <Navigate to="/find-activities" replace={true} />;
-  }
+  } 
 
   return (
     <>
-      <div className="m-auto flex-col justify-center py-8">
+      <div className="m-auto flex-col justify-center py-8 px-8">
         <h1 className="text-center text-5xl font-semibold">Welcome!</h1>
         <div className="flex justify-center py-8 w-full m-auto">
           <form className="flex flex-col gap-12 md:w-1/2 justify-center" onSubmit={handleFormSubmit}>
@@ -55,9 +55,13 @@ export default function Login() {
             <button className="bg-main p-4 text-white font-semibold rounded-md" disabled={currentUser !== null } onClick={handleLogin}>
               Login
             </button>
+            <p className="flex flex-col">Bro password should have more than 8 characters please</p> 
           </form>
+  
         </div>
+
       </div>
+
     </>
   );
 }
