@@ -4,12 +4,31 @@ import { AiOutlineUser } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../context/UserAuthContext";
 import { ImExit } from "react-icons/im";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom";
+
 
 export default function Sidebar() {
+  const [isOpen, setIsOpen] = useState<boolean>(true);
+
+  const navigate = useNavigate();
+
+  const handleLogoutClick = async () => {
+    try {
+      await handleLogout();
+      navigate("/", { replace: true });
+    } catch (error) {
+      alert("Error");
+    }
+  };
+
+
+
   const { handleLogout } = useAuthContext();
   return (
-    <aside className="bg-white shadow-lg min-h-screen w-full px-8 py-8 border-r-2">
-      <div className="sticky max-h-4 top-0 py-4">
+    <div className="sticky max-h-4 top-0">
+    <aside className="bg-white shadow-lg min-h-screen w-full px-8 py-8 border-r-2 max-w-xs">
+
       <h5 className="text-accent/80 font-bold text-xl">Activities</h5>
       <ul className="py-2">
         <li className="group hover:bg-main rounded-lg flex gap-2 items-center p-4">
@@ -46,7 +65,7 @@ export default function Sidebar() {
         <li className="group hover:bg-main rounded-lg flex gap-2 items-center p-4">
           <button
             className="flex gap-2 group-hover:text-white text-accent/80 text-xl font-normal items-center"
-            onClick={handleLogout}
+            onClick={handleLogoutClick}
           >
             <ImExit />
             Logout
@@ -54,7 +73,8 @@ export default function Sidebar() {
         </li>
       </ul>
       <hr></hr>
+      </aside>
       </div>
-    </aside>
+
   );
 }
