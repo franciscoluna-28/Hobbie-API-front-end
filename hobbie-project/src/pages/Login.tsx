@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { login, signup } from "../../firebase/firebase";
+import { login, signup, signupWithGoogle, loginWithGoogle } from "../../firebase/firebase";
 import { Navigate } from "react-router-dom";
 import { useAuthContext } from "../context/UserAuthContext";
 
@@ -51,7 +51,8 @@ export default function Login() {
           <form className="flex flex-col gap-12 md:w-1/2 justify-center" onSubmit={handleFormSubmit}>
             <input className="border-2 p-2 rounded-md" ref={emailRef} placeholder="Email" />
             <input className="border-2 p-2 rounded-md" ref={passwordRef} type="password" placeholder="Password" />
-            <button className="flex w-min" onClick={handleSignup}>Or signup here</button>
+            <button className="flex w-full text-main" onClick={handleSignup}>Or signup here</button>
+            <button className="flex w-full text-main" onClick={signupWithGoogle}>Or signup here but with Google</button>
             <button className="bg-main p-4 text-white font-semibold rounded-md" disabled={currentUser !== null } onClick={handleLogin}>
               Login
             </button>
