@@ -66,4 +66,3 @@ export function signupWithGoogle() {
 const analytics = getAnalytics(app);
 console.log(analytics);
 
-const myUser = "";

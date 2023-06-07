@@ -1,5 +1,5 @@
 import useFetch from "../hooks/useFetch"
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import { CustomActivity } from "./Activity";
 import Activity from "./Activity";
 import { motion } from "framer-motion";

@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { login, signup, signupWithGoogle, loginWithGoogle } from "../../firebase/firebase";
+import { login, signup, signupWithGoogle } from "../../firebase/firebase";
 import { Navigate } from "react-router-dom";
 import { useAuthContext } from "../context/UserAuthContext";
 
