@@ -5,13 +5,13 @@ import { toast } from "react-toastify";
 import { ActivityType } from "../components/Activity";
 
 interface ActivityContextProps {
-  activities: CustomActivity[]; 
+  activities: CustomActivity[];
   currentKeyword: string;
   setCurrentKeyword: (keyword: string) => void;
   setFilteredActivities: (filteredActivities: CustomActivity[]) => void;
   isLoading: boolean;
   error: boolean;
-/*   deleteActivity: (activityId: string) => void; */
+  /*   deleteActivity: (activityId: string) => void; */
   savedActivities: CustomActivity[];
   saveActivity: (activityId: string) => void;
   filterActivities: (type: ActivityType) => void;
@@ -54,13 +54,14 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
   }, [savedActivities]);
 
   // Function to delete activity according to its id
-/*   const deleteActivity = (activityKey: string) => {
+  /*   const deleteActivity = (activityKey: string) => {
     // TODO delete the actual activity lol
   }; */
 
-  const saveActivity = (activityID: string) => {  const activityToSave = activities.find(
-    (activity) => activity.id === activityID
-  ) || filteredActivities.find((activity) => activity.id === activityID);
+  const saveActivity = (activityID: string) => {
+    const activityToSave =
+      activities.find((activity) => activity.id === activityID) ||
+      filteredActivities.find((activity) => activity.id === activityID);
 
     if (activityToSave) {
       toast.success("🦄 Wow you have saved a new activity!", {
@@ -116,7 +117,7 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
     activities,
     isLoading,
     error,
-/*  */
+    /*  */
     savedActivities,
     saveActivity,
     filterActivities,
@@ -124,7 +125,7 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
     filterRecommendedActivities,
     currentKeyword,
     setCurrentKeyword,
-    setFilteredActivities
+    setFilteredActivities,
   };
 
   return (
