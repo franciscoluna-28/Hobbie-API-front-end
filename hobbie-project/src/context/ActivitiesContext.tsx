@@ -3,8 +3,16 @@ import useFetch from "../hooks/useFetch";
 import { CustomActivity } from "../components/Activity";
 import { toast } from "react-toastify";
 import { ActivityType } from "../components/Activity";
-import { addDoc } from "firebase/firestore";
-import { colRef } from "../../firebase/firebase";
+import { addDoc, getDoc } from "firebase/firestore";
+import { usersRef } from "../../firebase/firebase";
+import { doc } from "firebase/firestore";
+import { auth } from "../../firebase/firebase";
+import { collection } from "firebase/firestore";
+import { query } from "firebase/firestore";
+import { where } from "firebase/firestore";
+import { getDocs } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
+import { updateDoc } from "firebase/firestore";
 
 interface ActivityContextProps {
   activities: CustomActivity[];
@@ -60,14 +68,14 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
     // TODO delete the actual activity lol
   }; */
 
-
-
-  const saveActivity = (activityID: string) => {
+  const saveActivity = async (activityID: string) => {
     const activityToSave =
       activities.find((activity) => activity.id === activityID) ||
       filteredActivities.find((activity) => activity.id === activityID);
 
-      console.log(activityToSave)
+      
+
+    console.log(activityToSave);
 
     if (activityToSave) {
       toast.success("🦄 Wow you have saved a new activity!", {
@@ -80,18 +88,51 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
         progress: undefined,
         theme: "light",
       });
+
+      // eslint-disable-next-line prefer-const
+      let myObject: any = {
+        id: ""
+      };
+
+      const currentUserDocument = query(
+        usersRef,
+        where("uid", "==", auth.currentUser.uid)
+      );
+        
+      
+
+      const currentUserDocumentSnapshot = await getDocs(currentUserDocument);
+      currentUserDocumentSnapshot.forEach((doc) => {
+        myObject.id = doc.id;
+        console.log(myObject)
+      });
+
+      const washingtonRef = doc(db, "users", myObject.id);
+
+    // Set the "capital" field of the city 'DC'
+    await updateDoc(washingtonRef, {
+      activities: [{
+        name: activityToSave.activity
+      }]
+    }
+    
+    
+    );
+    
+
+
+
+
+      
+
+
+
       setSavedActivities((prevActivities) => [
         ...prevActivities,
         activityToSave,
       ]);
-      addDoc(colRef, {
-        title: activityToSave.activity
-      }).then(() => {alert("activity added!")})
     }
-
-    console.log(savedActivities);
   };
-
   // Function to filter activities based on type
   const filterActivities = (type: string) => {
     if (type === "") {

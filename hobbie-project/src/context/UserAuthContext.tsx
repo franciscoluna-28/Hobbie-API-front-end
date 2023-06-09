@@ -7,7 +7,6 @@ interface AuthContextType {
   currentUser: User | null;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleLogout: () => Promise<void>;
-
 }
 
 interface User {
@@ -22,7 +21,6 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 // eslint-disable-next-line react-refresh/only-export-components
 export const useAuthContext = () => {
   const authContext = useContext(AuthContext);
-  
 
   if (!authContext) {
     throw new Error(
@@ -33,20 +31,14 @@ export const useAuthContext = () => {
 };
 
 export default function AuthProvider({ children }: React.PropsWithChildren) {
-
-
   async function handleLogout() {
     try {
       await logout();
-      <Navigate to="/" replace={true}></Navigate>
+      <Navigate to="/" replace={true}></Navigate>;
     } catch {
       alert("Error!");
-
     }
-
   }
-
-
 
   const authContextValue = {
     currentUser: useAuth(),

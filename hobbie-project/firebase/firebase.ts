@@ -9,7 +9,13 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import { getFirestore, collection, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  setDoc,
+  addDoc,
+} from "firebase/firestore";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -33,16 +39,34 @@ export const auth = getAuth();
 export const db = getFirestore();
 
 // collections
-export const colRef = collection(db, 'users');
-console.log(colRef)
+export const usersRef = collection(db, "users");
 
 // get data
-getDocs(colRef).then((snapshot) => {
-  console.log(snapshot.docs);
-});
+getDocs(usersRef)
+  .then((snapshot) => {
+    // eslint-disable-next-line prefer-const
+    let users: { id: string }[] = [];
+    snapshot.docs.forEach((doc) => {
+      users.push({ ...doc.data(), id: doc.id });
+    });
+    console.log(users);
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
-export function signup(email: string, password: string) {
-  return createUserWithEmailAndPassword(auth, email, password);
+export async function signup(email: string, password: string) {
+  const userCredential = await createUserWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
+  const user = userCredential.user;
+  addDoc(usersRef, {
+    name: user.displayName,
+    uid: user.uid,
+    email: user.email,
+  });
 }
 
 export function logout() {
