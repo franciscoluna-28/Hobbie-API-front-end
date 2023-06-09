@@ -78,7 +78,7 @@ export default function Activity({
   };
 
   return (
-    <article className="bg-white min-w-full relative shadow-md border-2 rounded-lg overflow-hidden w-full h-fit max-w-md hover:shadow-2xl duration-200">
+    <article className="bg-white min-w-full relative shadow-md border-2 rounded-lg overflow-hidden w-full min-h-fit max-w-6xl hover:shadow-2xl duration-200">
       <img
         className="w-full h-auto bg-contain relative"
         src={image?.urls?.small}
