@@ -3,6 +3,8 @@ import useFetch from "../hooks/useFetch";
 import { CustomActivity } from "../components/Activity";
 import { toast } from "react-toastify";
 import { ActivityType } from "../components/Activity";
+import { addDoc } from "firebase/firestore";
+import { colRef } from "../../firebase/firebase";
 
 interface ActivityContextProps {
   activities: CustomActivity[];
@@ -58,10 +60,14 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
     // TODO delete the actual activity lol
   }; */
 
+
+
   const saveActivity = (activityID: string) => {
     const activityToSave =
       activities.find((activity) => activity.id === activityID) ||
       filteredActivities.find((activity) => activity.id === activityID);
+
+      console.log(activityToSave)
 
     if (activityToSave) {
       toast.success("🦄 Wow you have saved a new activity!", {
@@ -78,6 +84,9 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
         ...prevActivities,
         activityToSave,
       ]);
+      addDoc(colRef, {
+        title: activityToSave.activity
+      }).then(() => {alert("activity added!")})
     }
 
     console.log(savedActivities);
