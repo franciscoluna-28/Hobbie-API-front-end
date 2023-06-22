@@ -8,14 +8,10 @@ import {
   signInWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
+  Auth,
 } from "firebase/auth";
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  setDoc,
-  addDoc,
-} from "firebase/firestore";
+import { getFirestore } from "firebase/firestore";
+import axios from "axios";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -33,40 +29,42 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 // Handling the authentication
-export const auth = getAuth();
+export const auth: Auth = getAuth();
 
 // Getting the firestore setup
 export const db = getFirestore();
 
-// collections
-export const usersRef = collection(db, "users");
 
-// get data
-getDocs(usersRef)
-  .then((snapshot) => {
-    // eslint-disable-next-line prefer-const
-    let users: { id: string }[] = [];
-    snapshot.docs.forEach((doc) => {
-      users.push({ ...doc.data(), id: doc.id });
-    });
-    console.log(users);
-  })
-  .catch((error) => {
-    console.log(error);
-  });
 
 export async function signup(email: string, password: string) {
-  const userCredential = await createUserWithEmailAndPassword(
-    auth,
-    email,
-    password
-  );
-  const user = userCredential.user;
-  addDoc(usersRef, {
-    name: user.displayName,
-    uid: user.uid,
-    email: user.email,
-  });
+  try {
+    // Crear el usuario en Firebase
+
+    
+    await createUserWithEmailAndPassword(auth, email, password);
+    
+    await axios.post("http://localhost:3000/users/register-user", {
+      email: auth.currentUser?.email,
+      uid: auth.currentUser?.uid,
+    });
+
+
+
+
+
+
+
+
+    // Resto del código para manejar el resultado de la solicitud o realizar otras acciones necesarias
+  } catch (error) {
+    // Error al registrar el usuario en el backend
+    console.error("Error al registrar el usuario:", error);
+    // Resto del código para manejar el error o mostrar un mensaje de error al usuario
+  }
+
+
+
+
 }
 
 export function logout() {
@@ -89,4 +87,3 @@ export function signupWithGoogle() {
 
 const analytics = getAnalytics(app);
 console.log(analytics);
-
