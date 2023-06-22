@@ -3,9 +3,18 @@ import { useActivityContext } from "../context/ActivitiesContext";
 import CategoriesDropdown from "./CategoriesDropdown";
 import FilteredActivitiesByCategory from "./FilteredActivitiesByCategory";
 import RecomendedActivities from "./RecommendedActivities";
+import axios from "axios";
+import { auth } from "../../firebase/firebase";
+
+
 
 export default function Activities() {
   const { currentKeyword } = useActivityContext();
+  // Send the user UID to the backend
+
+
+
+
 
   return (
     <>
@@ -15,9 +24,8 @@ export default function Activities() {
           transition={{ duration: 0.3 }}
           
           >
-          <h2 className="lg:text-6xl text-5xl text-accent font-bold mb-8 lg:flex gap-4">
-            Recommended <h1 className="lg:flex text-5xl lg:text-6xl mt-4 lg:mt-0 text-main">Activities</h1>
-          </h2>
+          <h1 className="lg:text-6xl text-5xl text-accent font-bold mb-8 lg:flex gap-4">
+            Recommended Activities</h1>
           <CategoriesDropdown />
           <motion.div
             className="flex gap-4 flex-wrap"
