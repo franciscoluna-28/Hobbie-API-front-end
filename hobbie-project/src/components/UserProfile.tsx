@@ -8,8 +8,6 @@ export default function UserProfile(){
     const { currentUser } = useAuthContext();
     const { savedActivities } = useActivityContext();
 
-
-    console.log(currentUser)
     return(
         <div className="flex flex-col flex-1">
             <h2 className="font-bold text-6xl text-left flex">User Profile</h2>
@@ -19,4 +17,8 @@ export default function UserProfile(){
             
         </div>
     )
+
+
+    
 }
+
