@@ -3,7 +3,7 @@ import { HobbieAPIResponse } from "../components/RecommendedActivities"
 import { useEffect, useState } from "react"
 
 export default function useFetch(url: string) {
-    const [response, setResponse] = useState<HobbieAPIResponse | null>(null) 
+    const [response, setResponse] = useState<HobbieAPIResponse | any | null>(null) 
     const [error, setError] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
 
