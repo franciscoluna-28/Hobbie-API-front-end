@@ -3,11 +3,13 @@ import { useActivityContext } from "../context/ActivitiesContext";
 import "react-toastify/dist/ReactToastify.css";
 import Activity from "./Activity";
 import { CustomActivity } from "./Activity";
+import { auth } from "../../firebase/firebase";
 /* import useFetch from "../hooks/useFetch";
 import { useState, useEffect } from "react" */
 
 
 export interface HobbieAPIResponse {
+
   data: CustomActivity[];
 }
 
@@ -22,6 +24,8 @@ export default function RecomendedActivities() {
   if (error) {
     return <div>There was an error while loading...</div>;
   }
+
+
 /*   const { response, error, isLoading } = useFetch("http://localhost:3000/activity/get-a-few-activities")
   const [ activities, setActivities] = useState<any>([])
 
@@ -41,9 +45,12 @@ export default function RecomendedActivities() {
       return <div>There was an error while loading...</div>;
     } */
 
+console.log(auth.currentUser)
+
   return (
     <div>
       <div className="flex flex-wrap gap-4">
+
         {activities.map((activityData: CustomActivity) => (
           <motion.div
             key={activityData.id}
