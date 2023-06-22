@@ -7,9 +7,7 @@ import { ImExit } from "react-icons/im";
 /* import { useState } from "react" */
 import { useNavigate } from "react-router-dom";
 
-export default function Sidebar() {
-  /*   const [isOpen, setIsOpen] = useState<boolean>(true); */
-
+export default function Sidebar() { 
   const navigate = useNavigate();
 
   const handleLogoutClick = async () => {
