@@ -3,16 +3,9 @@ import useFetch from "../hooks/useFetch";
 import { CustomActivity } from "../components/Activity";
 import { toast } from "react-toastify";
 import { ActivityType } from "../components/Activity";
-import { addDoc, getDoc } from "firebase/firestore";
-import { usersRef } from "../../firebase/firebase";
-import { doc } from "firebase/firestore";
+import axios from "axios";
 import { auth } from "../../firebase/firebase";
-import { collection } from "firebase/firestore";
-import { query } from "firebase/firestore";
-import { where } from "firebase/firestore";
-import { getDocs } from "firebase/firestore";
-import { db } from "../../firebase/firebase";
-import { updateDoc } from "firebase/firestore";
+import { useCallback } from "react";
 
 interface ActivityContextProps {
   activities: CustomActivity[];
@@ -27,6 +20,8 @@ interface ActivityContextProps {
   filterActivities: (type: ActivityType) => void;
   filterRecommendedActivities: (type: ActivityType) => void;
   filteredActivities: CustomActivity[];
+  fetchSavedActivities: () => void;
+  setSavedActivities: (savedActivities: CustomActivity[]) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -73,66 +68,44 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
       activities.find((activity) => activity.id === activityID) ||
       filteredActivities.find((activity) => activity.id === activityID);
 
-      
-
-    console.log(activityToSave);
-
-    if (activityToSave) {
-      toast.success("🦄 Wow you have saved a new activity!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-
-      // eslint-disable-next-line prefer-const
-      let myObject: any = {
-        id: ""
-      };
-
-      const currentUserDocument = query(
-        usersRef,
-        where("uid", "==", auth.currentUser.uid)
+    try {
+      await axios.post(
+        `http://localhost:3000/users/add-activity-by-id/${auth.currentUser?.uid}`,
+        {
+          activityId: activityID,
+          uid: auth.currentUser?.uid,
+          activity: activityToSave?.activity,
+          type: activityToSave?.type,
+          price: activityToSave?.price,
+          link: activityToSave?.link,
+          accesibility: activityToSave?.accessibility,
+          participants: activityToSave?.participants,
+          image: activityToSave?.image,
+          email: auth.currentUser?.email,
+        }
       );
-        
-      
 
-      const currentUserDocumentSnapshot = await getDocs(currentUserDocument);
-      currentUserDocumentSnapshot.forEach((doc) => {
-        myObject.id = doc.id;
-        console.log(myObject)
-      });
-
-      const washingtonRef = doc(db, "users", myObject.id);
-
-    // Set the "capital" field of the city 'DC'
-    await updateDoc(washingtonRef, {
-      activities: [{
-        name: activityToSave.activity
-      }]
-    }
-    
-    
-    );
-    
-
-
-
-
-      
-
-
-
-      setSavedActivities((prevActivities) => [
-        ...prevActivities,
-        activityToSave,
-      ]);
+      if (activityToSave) {
+        toast.success("🦄 Wow you have saved a new activity!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        setSavedActivities((prevActivities) => [
+          ...prevActivities,
+          activityToSave,
+        ]);
+      }
+    } catch (error) {
+      console.log("Error saving activity:", error);
     }
   };
+
   // Function to filter activities based on type
   const filterActivities = (type: string) => {
     if (type === "") {
@@ -142,6 +115,25 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
       setFilteredActivities(filtered);
     }
   };
+
+  const fetchSavedActivities = useCallback(async () => {
+    try {
+      const response = await axios.post(
+        `http://localhost:3000/users/find-activities-by-user-uid/${auth.currentUser?.uid}`
+      );
+
+      if (response.status === 200) {
+        const activities = response.data;
+        setSavedActivities(activities);
+      } else {
+        console.error("Failed to fetch saved activities");
+        // Handle the error case
+      }
+    } catch (error) {
+      console.error("Error fetching saved activities:", error);
+      // Handle the error case
+    }
+  }, [setSavedActivities]);
 
   // Function to filter recommended activities based on type
   const filterRecommendedActivities = async (type: any) => {
@@ -176,6 +168,8 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
     currentKeyword,
     setCurrentKeyword,
     setFilteredActivities,
+    fetchSavedActivities,
+    setSavedActivities,
   };
 
   return (
