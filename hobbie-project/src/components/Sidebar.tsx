@@ -6,6 +6,7 @@ import { useAuthContext } from "../context/UserAuthContext";
 import { ImExit } from "react-icons/im";
 /* import { useState } from "react" */
 import { useNavigate } from "react-router-dom";
+import myLogo from "../assets/logo.png"
 
 export default function Sidebar() { 
   const navigate = useNavigate();
@@ -23,6 +24,8 @@ export default function Sidebar() {
   return (
     <div className="sticky max-h-4 top-0">
       <aside className="bg-white shadow-lg min-h-screen w-full px-8 py-8 border-r-2 max-w-xs">
+        <img className="w-full h-full" src={myLogo}></img>
+        <hr className="py-4"></hr>
         <h5 className="text-accent/80 font-bold text-xl">Activities</h5>
         <ul className="py-2">
           <li className="group hover:bg-main rounded-lg flex gap-2 items-center p-4">

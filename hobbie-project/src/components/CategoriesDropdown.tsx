@@ -30,7 +30,7 @@ export default function CategoriesDropdown() {
 
   return (
     <>
-      <label htmlFor="activityType" className="text-gray-400 text-lg flex">
+      <label htmlFor="activityType" className="text-accent/70 text-lg flex">
         Filter Activities by Category
       </label>
       <div className="relative group inline-block mt-4 mb-8">
@@ -39,7 +39,7 @@ export default function CategoriesDropdown() {
           id="activityType"
           value={currentKeyword}
           onChange={handleFilterChange}
-          className="bg-main text-white p-4 pr-10 flex hover:brightness-75 rounded-lg appearance-none text-xl font-bold"
+          className="bg-main text-accent p-4 pr-10 flex hover:brightness-75 rounded-lg appearance-none text-xl font-bold"
         >
           {categoryOptions.map((option) => (
             <option
@@ -52,7 +52,7 @@ export default function CategoriesDropdown() {
           ))}
         </select>
         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-white">
-          <AiOutlineCaretDown className="-translate-x-2 group-hover:brightness-75 h-4 w-4 font-bold text-xl scale-125" />
+          <AiOutlineCaretDown className="-translate-x-2 group-hover:brightness-75 h-4 w-4 font-bold text-xl scale-125 text-accent" />
         </div>
       </div>
     </>
