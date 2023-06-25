@@ -63,7 +63,7 @@ export default function Login() {
               className="border-2 p-2 rounded-md"
               ref={passwordRef}
               type="password"
-              placeholder="Password"
+              placeholder="Password please"
             />
             <button className="flex w-full text-main" onClick={handleSignup}>
               Or signup here
