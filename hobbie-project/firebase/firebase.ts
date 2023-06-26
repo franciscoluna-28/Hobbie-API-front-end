@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { FirebaseAppSettings, initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import {
   getAuth,
@@ -10,7 +10,7 @@ import {
   signInWithPopup,
   Auth,
 } from "firebase/auth";
-import { getFirestore } from "firebase/firestore";
+import { Firestore, getFirestore } from "firebase/firestore";
 import axios from "axios";
 
 // Your web app's Firebase configuration
@@ -25,46 +25,28 @@ const firebaseConfig = {
   measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
 };
 
-// Initialize Firebase
+// Initializing Firebase
 const app = initializeApp(firebaseConfig);
 
 // Handling the authentication
 export const auth: Auth = getAuth();
 
 // Getting the firestore setup
-export const db = getFirestore();
-
-
+export const db: Firestore = getFirestore();
 
 export async function signup(email: string, password: string) {
   try {
-    // Crear el usuario en Firebase
-
-    
     await createUserWithEmailAndPassword(auth, email, password);
-    
+
     await axios.post("http://localhost:3000/users/register-user", {
       email: auth.currentUser?.email,
       uid: auth.currentUser?.uid,
     });
-
-
-
-
-
-
-
-
-    // Resto del código para manejar el resultado de la solicitud o realizar otras acciones necesarias
+    
   } catch (error) {
-    // Error al registrar el usuario en el backend
     console.error("Error al registrar el usuario:", error);
-    // Resto del código para manejar el error o mostrar un mensaje de error al usuario
+
   }
-
-
-
-
 }
 
 export function logout() {
