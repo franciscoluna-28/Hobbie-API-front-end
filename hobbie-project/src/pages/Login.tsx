@@ -78,9 +78,8 @@ export default function Login() {
             <button
               className="bg-white text-gray-500 flex justify-center gap-4 shadow-sm border-2 p-4 font-semibold rounded-md"
               disabled={currentUser !== null}
-              onClick={handleLogin}
-            >
-              Sign in with Google{" "}
+              onClick={signupWithGoogle}
+            >Sign in with Google
               <img
                 className="h-6 w-6"
                 src={
@@ -92,63 +91,4 @@ export default function Login() {
         </div>
       </div>
     </>
-  );
-}
-/*   const emailRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
-  const [loading, setLoading] = useState(false);
-  const currentUser = useAuth();
-
-  async function handleSignup() {
-    try {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      await signup(emailRef.current!.value, passwordRef.current!.value);
-    } catch {
-      alert("Error!");
-    }
-    setLoading(false);
-  }
-
-  async function handleLogout() {
-    try {
-      await logout();
-    } catch {
-      alert("Error!");
-    }
-    setLoading(false);
-}
-
-  async function handleLogin() {
-    try {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        await login(emailRef.current!.value, passwordRef.current!.value);
-    } catch {
-      alert("Error!");
-    }
-    setLoading(false);
-  }
-
-
-
-
-  return (
-    <div>
-      <div>
-        <p>Currently logged in as: {currentUser?.email}</p>
-        <input ref={emailRef} placeholder="Email" />
-        <input ref={passwordRef} type="password" placeholder="Password" />
-        <button disabled={loading || currentUser} onClick={handleSignup}>
-          Sign up
-        </button>
-        <button disabled={loading || currentUser} onClick={handleLogin}>
-          Login
-        </button>
-      </div>
-
-      <button disabled={loading || !currentUser} onClick={handleLogout}>
-        Log out
-      </button>
-    </div>
-  );
-}
- */
+)}
