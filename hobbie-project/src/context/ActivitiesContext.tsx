@@ -22,6 +22,7 @@ interface ActivityContextProps {
   filteredActivities: CustomActivity[];
   fetchSavedActivities: () => void;
   setSavedActivities: (savedActivities: CustomActivity[]) => void;
+  deleteActivity: (id: string) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -58,10 +59,44 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
     console.log(savedActivities);
   }, [savedActivities]);
 
-  // Function to delete activity according to its id
-  /*   const deleteActivity = (activityKey: string) => {
-    // TODO delete the actual activity lol
-  }; */
+  const deleteActivity = async (activityId: string) => {
+    try {
+      await axios.delete(
+        `http://localhost:3000/users/delete-activity-from-user/${auth.currentUser?.uid}`,
+        { data: { activityId: activityId } }
+      );
+  
+      const response = await axios.get(
+        `http://localhost:3000/users/find-activities-by-user-uid/${auth.currentUser?.uid}`
+      );
+  
+      const activities = response.data;
+      console.log(activities);
+      setSavedActivities(activities);
+  
+      // Actualiza las actividades guardadas en filteredActivities
+      setFilteredActivities((prevActivities) =>
+        prevActivities.filter((activity) => activity.id !== activityId)
+      );
+  
+      toast.success("Activity deleted successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    } catch (error) {
+      console.log("Error deleting activity:", error);
+    }
+  };
+  
+  
+
+  
 
   const saveActivity = async (activityID: string) => {
     const activityToSave =
@@ -159,7 +194,6 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
     activities,
     isLoading,
     error,
-    /*  */
     savedActivities,
     saveActivity,
     filterActivities,
@@ -170,6 +204,7 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
     setFilteredActivities,
     fetchSavedActivities,
     setSavedActivities,
+    deleteActivity,
   };
 
   return (
