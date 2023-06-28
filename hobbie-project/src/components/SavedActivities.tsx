@@ -6,16 +6,11 @@ import { auth } from '../../firebase/firebase'
 import { useActivityContext } from '../context/ActivitiesContext'
 
 export default function SavedActivities () {
-  const { savedActivities, setSavedActivities, deleteActivity } = useActivityContext()
-  const { response, error, isLoading } = useFetch(
+  const { savedActivities, deleteActivity } = useActivityContext()
+  const { error, isLoading } = useFetch(
     `http://localhost:3000/users/find-activities-by-user-uid/${auth.currentUser?.uid}`
   )
 
-  useEffect(() => {
-    if (response) {
-      console.log(savedActivities)
-    }
-  }, [savedActivities, response, setSavedActivities])
 
   return (
     <>

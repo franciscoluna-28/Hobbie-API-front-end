@@ -1,3 +1,4 @@
+import { User } from '@firebase/auth-types';
 import { Navigate, Outlet } from 'react-router-dom';
 
 export function PrivateWrapper(currentUser: any) {
