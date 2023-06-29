@@ -12,6 +12,10 @@ import Login from "./pages/Login";
 import { useAuthContext } from "./context/UserAuthContext";
 import { PrivateWrapper } from "../utils/PrivateWrapper";
 import RootLayout from "./layouts/RootLayout";
+import { QueryClientProvider, QueryClient } from "react-query";
+
+// Starting the React Query client
+const queryClient = new QueryClient();
 
 function App() {
   const { currentUser } = useAuthContext();
@@ -39,8 +43,10 @@ function App() {
 
   return (
     <>
-      <RouterProvider router={router}></RouterProvider>
-      <ToastContainer></ToastContainer>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router}></RouterProvider>
+        <ToastContainer></ToastContainer>
+      </QueryClientProvider>
     </>
   );
 }
