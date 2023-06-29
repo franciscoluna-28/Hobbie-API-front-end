@@ -73,9 +73,12 @@ export default function Activity({
   const { savedActivities, saveActivity } = useActivityContext();
   const [showMore, setShowMore] = useState(false);
 
+
   const toggleShowMore = () => {
     setShowMore((prevShowMore) => !prevShowMore);
   };
+
+
 
   return (
     <article className="bg-white min-w-full relative shadow-md border-2 rounded-lg overflow-hidden w-full min-h-fit max-w-6xl hover:shadow-2xl duration-200">
