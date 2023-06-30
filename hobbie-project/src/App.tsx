@@ -10,7 +10,7 @@ import SavedActivities from "./components/SavedActivities";
 import UserProfile from "./components/UserProfile";
 import Login from "./pages/Login";
 import { useAuthContext } from "./context/UserAuthContext";
-import { PrivateWrapper } from "../utils/PrivateWrapper";
+import PrivateWrapper from "./utils/PrivateWrapper";
 import RootLayout from "./layouts/RootLayout";
 import { QueryClientProvider, QueryClient } from "react-query";
 
