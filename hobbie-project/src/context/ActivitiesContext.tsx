@@ -1,11 +1,11 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import useFetch from "../hooks/useFetch";
 import { CustomActivity } from "../components/Activity";
-import { toast } from "react-toastify";
 import { ActivityType } from "../components/Activity";
 import axios from "axios";
 import { auth } from "../../firebase/firebase";
 import { useCallback } from "react";
+import NotificationService from "../utils/ToastMessages";
 
 interface ActivityContextProps {
   activities: CustomActivity[];
@@ -65,38 +65,24 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
         `http://localhost:3000/users/delete-activity-from-user/${auth.currentUser?.uid}`,
         { data: { activityId: activityId } }
       );
-  
+
       const response = await axios.get(
         `http://localhost:3000/users/find-activities-by-user-uid/${auth.currentUser?.uid}`
       );
-  
+
+      NotificationService.error("🦄 Activity deleted successfully!");
       const activities = response.data;
       console.log(activities);
       setSavedActivities(activities);
-  
+
       // Actualiza las actividades guardadas en filteredActivities
       setFilteredActivities((prevActivities) =>
         prevActivities.filter((activity) => activity.id !== activityId)
       );
-  
-      toast.success("Activity deleted successfully!", {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
     } catch (error) {
       console.log("Error deleting activity:", error);
     }
   };
-  
-  
-
-  
 
   const saveActivity = async (activityID: string) => {
     const activityToSave =
@@ -121,16 +107,6 @@ export const ActivityProvider = ({ children }: ActivityProviderProps) => {
       );
 
       if (activityToSave) {
-        toast.success("🦄 Wow you have saved a new activity!", {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
         setSavedActivities((prevActivities) => [
           ...prevActivities,
           activityToSave,
