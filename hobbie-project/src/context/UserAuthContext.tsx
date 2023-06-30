@@ -2,18 +2,12 @@ import { createContext, useContext } from "react";
 import { logout } from "../../firebase/firebase";
 import useAuth from "../hooks/useAuth";
 import { Navigate } from "react-router-dom";
+import { User } from "@firebase/auth-types";
 
 interface AuthContextType {
-  currentUser: User | null;
+  currentUser: User;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleLogout: () => Promise<void>;
-}
-
-interface User {
-  email: string;
-  displayName: string;
-  emailVerified: string;
-  photoURL: string;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
