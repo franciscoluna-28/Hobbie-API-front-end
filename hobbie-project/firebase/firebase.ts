@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { FirebaseAppSettings, initializeApp } from "firebase/app";
+import { FirebaseOptions, initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import {
   getAuth,
@@ -10,12 +10,11 @@ import {
   signInWithPopup,
   Auth,
 } from "firebase/auth";
-import { Firestore, getFirestore } from "firebase/firestore";
 import axios from "axios";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+const firebaseConfig: FirebaseOptions = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
@@ -31,9 +30,6 @@ const app = initializeApp(firebaseConfig);
 // Handling the authentication
 export const auth: Auth = getAuth();
 
-// Getting the firestore setup
-export const db: Firestore = getFirestore();
-
 export async function signup(email: string, password: string) {
   try {
     await createUserWithEmailAndPassword(auth, email, password);
@@ -42,10 +38,8 @@ export async function signup(email: string, password: string) {
       email: auth.currentUser?.email,
       uid: auth.currentUser?.uid,
     });
-    
   } catch (error) {
     console.error("Error al registrar el usuario:", error);
-
   }
 }
 
@@ -57,12 +51,7 @@ export function login(email: string, password: string) {
   return signInWithEmailAndPassword(auth, email, password);
 }
 
-export function loginWithGoogle() {
-  const provider = new GoogleAuthProvider();
-  return signInWithPopup(auth, provider);
-}
-
-export function signupWithGoogle() {
+export function signUpAndLoginWithGoogle() {
   const provider = new GoogleAuthProvider();
   return signInWithPopup(auth, provider);
 }
