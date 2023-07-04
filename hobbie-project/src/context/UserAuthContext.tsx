@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 import { logout } from "../../firebase/firebase";
 import useAuth from "../hooks/useAuth";
 import { Navigate } from "react-router-dom";
@@ -8,11 +8,12 @@ interface AuthContextType {
   currentUser: User;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   handleLogout: () => Promise<void>;
+  token: string | null;
+  setToken: (token: string | null) => void;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useAuthContext = () => {
   const authContext = useContext(AuthContext);
 
@@ -21,10 +22,14 @@ export const useAuthContext = () => {
       "AuthContext is undefined. Make sure you are rendering the Login component within AuthContext.Provider."
     );
   }
+
   return authContext;
 };
 
 export default function AuthProvider({ children }: React.PropsWithChildren) {
+  const [token, setToken] = useState<string | null>(sessionStorage.getItem("accessToken"));
+  const currentUser = useAuth();
+
   async function handleLogout() {
     try {
       await logout();
@@ -35,8 +40,10 @@ export default function AuthProvider({ children }: React.PropsWithChildren) {
   }
 
   const authContextValue = {
-    currentUser: useAuth(),
+    currentUser,
     handleLogout,
+    token,
+    setToken,
   };
 
   return (
