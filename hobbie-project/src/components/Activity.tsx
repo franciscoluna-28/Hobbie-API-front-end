@@ -66,7 +66,7 @@ export default function Activity({
   price,
   id,
   accessibility,
-  image,
+  urls,
 }: CustomActivity) {
   // Getting the savedActivities from the context and the function for
   // saving them
@@ -81,7 +81,7 @@ export default function Activity({
     <article className="bg-white min-w-full relative shadow-md border-2 rounded-lg overflow-hidden w-full min-h-fit max-w-6xl hover:shadow-2xl duration-200">
       <img
         className="w-full h-auto bg-contain relative"
-        src={image?.urls?.small}
+        src={urls.full}
         alt="Activity"
       ></img>
       <button
