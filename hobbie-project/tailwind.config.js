@@ -3,6 +3,7 @@ export default {
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    "./node_modules/flowbite/**/*.js"
   ],
   theme: {
     fontFamily: {
@@ -19,5 +20,9 @@ export default {
 
     },
   },
-  plugins: [],
+  plugins: [
+      // eslint-disable-next-line no-undef
+      require('flowbite/plugin')
+]
+
 }
