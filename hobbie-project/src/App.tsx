@@ -15,7 +15,7 @@ import RootLayout from "./layouts/RootLayout";
 import { QueryClientProvider, QueryClient } from "react-query";
 
 // Starting the React Query client
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient();
 
 function App() {
   const { currentUser } = useAuthContext();
