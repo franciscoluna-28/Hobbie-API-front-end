@@ -8,5 +8,5 @@ interface PrivateWrapperProps {
 export default function PrivateWrapper(props: PrivateWrapperProps) {
   const { currentUser } = props;
 
-  return currentUser ? <Outlet /> : <Navigate to="/login" />;
+  return currentUser ? <Outlet /> : <Navigate to="/" />;
 }
