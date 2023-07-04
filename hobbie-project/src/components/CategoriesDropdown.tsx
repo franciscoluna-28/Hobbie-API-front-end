@@ -30,10 +30,7 @@ export default function CategoriesDropdown() {
 
   return (
     <>
-      <label htmlFor="activityType" className="text-accent/70 text-lg flex">
-        Filter Activities by Category
-      </label>
-      <div className="relative group inline-block mt-4 mb-8">
+      <div className="group block">
         <select
           name="activityType"
           id="activityType"
