@@ -30,26 +30,51 @@ const app = initializeApp(firebaseConfig);
 // Handling the authentication
 export const auth: Auth = getAuth();
 
+
 export async function signup(email: string, password: string) {
   try {
     await createUserWithEmailAndPassword(auth, email, password);
 
-    await axios.post("http://localhost:3000/users/register-user", {
-      email: auth.currentUser?.email,
-      uid: auth.currentUser?.uid,
-    });
+    const user: any | null = auth.currentUser;
+    if (user) {
+      const token = await user.getIdToken();
+      sessionStorage.setItem("accessToken", token);
+      console.log("Token:", token);
+      await axios.post("http://localhost:3000/api/user/register-user", {
+        email: user.email,
+        uid: user.uid,
+        bearedToken: token,
+      });
+    }
   } catch (error) {
     console.error("Error al registrar el usuario:", error);
   }
 }
 
+
 export function logout() {
   return signOut(auth);
 }
+export async function login(email: string, password: string) {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
 
-export function login(email: string, password: string) {
-  return signInWithEmailAndPassword(auth, email, password);
+    if (user) {
+      const token = await user.getIdToken();
+      // Almacenar el token en sessionStorage
+      sessionStorage.setItem("accessToken", token);
+      console.log("Token:", token);
+    }
+  } catch (error) {
+    console.error("Error al iniciar sesión:", error);
+  }
 }
+
+
+
+
+
 
 export function signUpAndLoginWithGoogle() {
   const provider = new GoogleAuthProvider();
