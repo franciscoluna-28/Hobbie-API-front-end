@@ -1,68 +1,60 @@
-import { motion } from "framer-motion";
-import { useActivityContext } from "../context/ActivitiesContext";
-import "react-toastify/dist/ReactToastify.css";
 import Activity from "./Activity";
 import { CustomActivity } from "./Activity";
-import { auth } from "../../firebase/firebase";
-/* import useFetch from "../hooks/useFetch";
-import { useState, useEffect } from "react" */
-
+import ActivitiesLayout from "../layouts/ActivitiesLayout";
+import ActivityAnimation from "./Animation/ActivityAnimation";
+import { useQuery } from "react-query";
+import { getNewRandomActivities } from "../api/activities";
+import { queryClient } from "../App";
+import Button from "./Button";
+import { AiOutlineReload } from "react-icons/ai";
 
 export interface HobbieAPIResponse {
-
-  data: CustomActivity[];
+  data: CustomActivity[] | any;
 }
 
 export default function RecomendedActivities() {
+  const handleUpdateClick = async () => {
+    await queryClient.invalidateQueries("activities");
+  };
 
-  const { isLoading, error, activities } = useActivityContext();
+  const {
+    status,
+    error,
+    data: recommendedActivities,
+  } = useQuery({
+    queryKey: ["activities"],
+    queryFn: getNewRandomActivities,
+    retry: false,
+    staleTime: Infinity,
+  });
 
-  if (isLoading) {
-    return <div>Loading...</div>;
+  if (status === "loading") {
+    return <h1>Loading...</h1>;
   }
 
   if (error) {
-    return <div>There was an error while loading...</div>;
+    return <h1>There was en error while loading...</h1>;
   }
 
-
-/*   const { response, error, isLoading } = useFetch("http://localhost:3000/activity/get-a-few-activities")
-  const [ activities, setActivities] = useState<any>([])
-
-  useEffect(() => {
-      if (response) {
-        setActivities(response.data);
-        console.log(activities);
-      }
-    }, [activities, response]);
-
-
-  if (isLoading) {
-      return <div>Loading...</div>;
-    }
-
-    if (error) {
-      return <div>There was an error while loading...</div>;
-    } */
-
-console.log(auth.currentUser)
-
   return (
-    <div>
-      <div className="flex flex-wrap gap-4">
-
-        {activities.map((activityData: CustomActivity) => (
-          <motion.div
-            key={activityData.id}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Activity {...activityData} key={activityData.id} />
-          </motion.div>
-        ))}
+    <>
+      <div>
+        <Button onClick={handleUpdateClick} disabled={false}>
+          <AiOutlineReload className="text-accent text-2xl" />
+          Get New Activities
+        </Button>
+        <h1 className="text-4xl text-gray-950 font-bold mb-8">
+          Activities For You
+        </h1>
+        <ActivitiesLayout>
+          {recommendedActivities &&
+            recommendedActivities.data.data.map((activityData) => (
+              <ActivityAnimation activityKey={activityData.id}>
+                <Activity {...activityData} />
+              </ActivityAnimation>
+            ))}
+        </ActivitiesLayout>
       </div>
-    </div>
+    </>
   );
 }
