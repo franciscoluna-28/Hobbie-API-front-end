@@ -1,28 +1,38 @@
-import useFetch from "../hooks/useFetch";
 import { useEffect } from "react";
+import { motion } from "framer-motion";
+import { useQuery } from "react-query";
 import { CustomActivity } from "./Activity";
 import Activity from "./Activity";
-import { motion } from "framer-motion";
 import { useActivityContext } from "../context/ActivitiesContext";
+import { getNewRandomActivitiesByKeyword } from "../api/activities";
 
 interface FilteredActivitiesByCategoryProps {
   currentKeyword: string;
+  token: string;
 }
 
 export default function FilteredActivitiesByCategory({
   currentKeyword,
+  token,
 }: FilteredActivitiesByCategoryProps) {
-  const { response, error, isLoading } = useFetch(
-    `http://localhost:3000/activity/get-activity-by-type/${currentKeyword}`
+  const { data: filteredActivities, isLoading, error } = useQuery<CustomActivity[]>(
+    ["activities", currentKeyword, token],
+    () => getNewRandomActivitiesByKeyword(currentKeyword, token),
+    {
+      retry: false,
+      staleTime: Infinity,
+    }
   );
-  const { filteredActivities, setFilteredActivities } = useActivityContext();
+
+  console.log(token)
+  const { setFilteredActivities } = useActivityContext();
 
   useEffect(() => {
-    if (response) {
-      setFilteredActivities(response.data);
-      console.log(filteredActivities);
+    if (filteredActivities) {
+      setFilteredActivities(filteredActivities);
+      console.log(filteredActivities)
     }
-  }, [filteredActivities, response, setFilteredActivities]);
+  }, [filteredActivities, setFilteredActivities]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -34,7 +44,7 @@ export default function FilteredActivitiesByCategory({
 
   return (
     <>
-      {filteredActivities.map((activityData: CustomActivity) => (
+      {filteredActivities.data.map((activityData: CustomActivity) => (
         <motion.div
           key={activityData.id}
           initial={{ opacity: 0, y: 20 }}
@@ -48,3 +58,5 @@ export default function FilteredActivitiesByCategory({
     </>
   );
 }
+
+
