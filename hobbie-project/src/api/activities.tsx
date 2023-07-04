@@ -4,7 +4,8 @@ import { CustomActivity } from "../components/Activity";
 
 export function getUserSavedActivities() {
   return axios.get<CustomActivity[]>(
-    `http://localhost:3000/users/find-activities-by-user-uid/${auth.currentUser?.uid}`
+    `http://localhost:3000/users/find-activities-by-user-uid/${auth.currentUser?.uid}`, 
+    
   );
 }
 
@@ -17,14 +18,19 @@ export function deleteActivityFromUser(activityId: string) {
   );
 }
 
-export function getNewRandomActivitiesByKeyword(query: string) {
+export function getNewRandomActivitiesByKeyword(query: string, token: string) {
   return axios.get<CustomActivity[]>(
-    `https://hobbie-api-project.onrender.com/activity/get-activity-by-type/${query}`
+    `http://localhost:3000/api/activity/random-with-query/${query}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
   );
 }
 
 export function getNewRandomActivities() {
   return axios.get<CustomActivity[]>(
-    "https://hobbie-api-project.onrender.com/activity/get-a-few-activities"
+    "http://localhost:3000/api/activity/random"
   );
 }
