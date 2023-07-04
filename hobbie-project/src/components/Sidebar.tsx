@@ -4,11 +4,10 @@ import { AiOutlineUser } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../context/UserAuthContext";
 import { ImExit } from "react-icons/im";
-/* import { useState } from "react" */
 import { useNavigate } from "react-router-dom";
-import myLogo from "../assets/logo.png"
+import myLogo from "../assets/logo.png";
 
-export default function Sidebar() { 
+export default function Sidebar() {
   const navigate = useNavigate();
 
   const handleLogoutClick = async () => {
