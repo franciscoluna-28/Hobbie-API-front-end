@@ -160,15 +160,15 @@ export default function Activity({
                   </h5>
                 </li>
               </ul>
-              <a href={image?.urls?.full}>
+              <a href={urls.full}>
                 <button className="text-white flex justify-center items-center gap-2 cursor-pointer font-semibold bg-main px-4 my-4 py-4 rounded-lg text-2xl w-full hover:brightness-90 duration-100">
                   See the image <FaUnsplash />
                 </button>
               </a>
 
-              <a href={image?.user?.links.self}>
+              <a href={urls.full}>
                 <p className="text-gray-400 flex">
-                  Photo by {image?.user?.name}
+                  Photo by {urls.full}
                 </p>
               </a>
             </motion.div>
