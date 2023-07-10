@@ -10,6 +10,8 @@ import { AiOutlineReload } from "react-icons/ai";
 
 export interface HobbieAPIResponse {
   data: CustomActivity[] | any;
+
+
 }
 
 export default function RecomendedActivities() {
@@ -48,7 +50,7 @@ export default function RecomendedActivities() {
         </h1>
         <ActivitiesLayout>
           {recommendedActivities &&
-            recommendedActivities.data.data.map((activityData) => (
+            recommendedActivities.data.map((activityData) => (
               <ActivityAnimation activityKey={activityData.id}>
                 <Activity {...activityData} />
               </ActivityAnimation>
