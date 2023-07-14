@@ -2,23 +2,33 @@ import axios from "axios";
 import { auth } from "../../firebase/firebase";
 import { CustomActivity } from "../components/Activity";
 
-export function getUserSavedActivities() {
+export function getUserSavedActivities(token: string) {
   return axios.get<CustomActivity[]>(
-    `http://localhost:3000/users/find-activities-by-user-uid/${auth.currentUser?.uid}`, 
-    
-  );
-}
-
-export function deleteActivityFromUser(activityId: string) {
-  return axios.delete<CustomActivity>(
-    `http://localhost:3000/users/delete-activity-from-user/${auth.currentUser?.uid}`,
+    `http://localhost:3000/api/user/get-activities-by-user/${auth.currentUser?.uid}`,
     {
-      data: { activityId: activityId },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     }
   );
 }
 
-export function getNewRandomActivitiesByKeyword(query: string, token: string) {
+export function deleteActivityFromUser(activityId: string, token: string) {
+  return axios.delete(
+    `http://localhost:3000/api/user/remove-activity-from-user/${auth.currentUser?.uid}?activityId=${activityId}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+}
+
+export function getNewRandomActivitiesByKeyword(
+  query: string,
+  token: string,
+  ...activity: CustomActivity[]
+) {
   return axios.get<CustomActivity[]>(
     `http://localhost:3000/api/activity/random-with-query/${query}`,
     {
@@ -29,8 +39,26 @@ export function getNewRandomActivitiesByKeyword(query: string, token: string) {
   );
 }
 
-export function getNewRandomActivities() {
+export function getNewRandomActivities(token: string) {
   return axios.get<CustomActivity[]>(
-    "http://localhost:3000/api/activity/random"
+    "http://localhost:3000/api/activity/random",
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+}
+
+export function saveActivityUser(uid: string, token: string) {
+  return (
+    axios.post<CustomActivity>(
+      `http://localhost:3000/api/user/add-activity-to-user${uid}`
+    ),
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
   );
 }
