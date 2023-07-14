@@ -7,6 +7,10 @@ import { MdOutlineDownloadDone } from "react-icons/md";
 import { useState } from "react";
 import { AiOutlineDown, AiOutlineUp } from "react-icons/ai";
 import { motion, AnimatePresence } from "framer-motion";
+import useActivitiesStore from "../store/activitiesStore";
+import { auth } from "../../firebase/firebase";
+
+
 
 // Enums
 export enum ActivityType {
@@ -28,7 +32,7 @@ export interface Activity {
   type: ActivityType;
   price: number;
   link: string;
-  id: string;
+  activityId: string;
   accessibility: Accessibility;
 }
 
@@ -64,14 +68,22 @@ export default function Activity({
   activity,
   type,
   price,
-  id,
+  activityId,
   accessibility,
   urls,
 }: CustomActivity) {
+
+  
+  
+  const myUid = auth.currentUser?.uid as string;
   // Getting the savedActivities from the context and the function for
   // saving them
-  const { savedActivities, saveActivity } = useActivityContext();
+  const savedActivities = useActivitiesStore(
+    (state) => state.userSavedActivities
+  );
   const [showMore, setShowMore] = useState(false);
+
+  const saveActivity = useActivitiesStore((state) => state.saveActivity)
 
   const toggleShowMore = () => {
     setShowMore((prevShowMore) => !prevShowMore);
@@ -85,11 +97,11 @@ export default function Activity({
         alt="Activity"
       ></img>
       <button
-        onClick={() => saveActivity(id)}
-        disabled={savedActivities.some((activity) => activity.id === id)}
+        onClick={() => saveActivity( myUid, sessionStorage.getItem("accessToken") as string, activityId)}
+        disabled={savedActivities.some((activity) => activity.activityId === activityId)}
         className="hover:brightness-90 bg-white absolute z-50 left-4 top-0 duration-200 text-white font-semibold disabled:brightness-75 px-4 my-4 py-2 text-xl w-24 h-24 rounded-full"
       >
-        {savedActivities.find((activity) => activity.id === id) ? (
+        {savedActivities.find((activity) => activity.activityId === activityId) ? (
           <MdOutlineDownloadDone className="text-main  text-5xl m-auto" />
         ) : (
           <FaBookmark className="text-main relative text-3xl m-auto" />
