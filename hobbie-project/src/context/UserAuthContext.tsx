@@ -1,12 +1,10 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { logout } from "../../firebase/firebase";
 import useAuth from "../hooks/useAuth";
 import { Navigate } from "react-router-dom";
-import { User } from "@firebase/auth-types";
-
+import { User } from "firebase/auth";
 interface AuthContextType {
-  currentUser: User;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  currentUser: User | null;
   handleLogout: () => Promise<void>;
   token: string | null;
   setToken: (token: string | null) => void;
@@ -14,32 +12,37 @@ interface AuthContextType {
 
 export const AuthContext = createContext<AuthContextType | null>(null);
 
-export const useAuthContext = () => {
-  const authContext = useContext(AuthContext);
-
-  if (!authContext) {
-    throw new Error(
-      "AuthContext is undefined. Make sure you are rendering the Login component within AuthContext.Provider."
-    );
-  }
-
-  return authContext;
-};
-
 export default function AuthProvider({ children }: React.PropsWithChildren) {
-  const [token, setToken] = useState<string | null>(sessionStorage.getItem("accessToken"));
+  const [token, setToken] = useState<string | null>(
+    sessionStorage.getItem("accessToken")
+  );
+
   const currentUser = useAuth();
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      if (sessionStorage.getItem("accessToken") === null) {
+        const userToken = await currentUser?.getIdToken();
+        if (userToken) {
+          sessionStorage.setItem("accessToken", userToken);
+          setToken(userToken);
+        }
+      }
+    };
+
+    fetchToken();
+  }, [currentUser]);
 
   async function handleLogout() {
     try {
       await logout();
-      <Navigate to="/" replace={true}></Navigate>;
+      <Navigate to="/" replace={true} />;
     } catch {
       alert("Error!");
     }
   }
 
-  const authContextValue = {
+  const authContextValue: AuthContextType = {
     currentUser,
     handleLogout,
     token,
