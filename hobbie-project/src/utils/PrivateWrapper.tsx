@@ -1,4 +1,4 @@
-import { User } from "@firebase/auth-types";
+import { User } from "firebase/auth";
 import { Navigate, Outlet } from "react-router-dom";
 
 interface PrivateWrapperProps {
