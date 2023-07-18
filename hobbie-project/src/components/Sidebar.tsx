@@ -2,9 +2,10 @@ import { MdOutlineExplore } from "react-icons/md";
 import { BsFillBookmarksFill } from "react-icons/bs";
 import { AiOutlineUser } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { useAuthContext } from "../context/UserAuthContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 import { ImExit } from "react-icons/im";
 import { useNavigate } from "react-router-dom";
+import { BsQuestionLg } from "react-icons/bs"
 import myLogo from "../assets/logo.png";
 
 export default function Sidebar() {
@@ -66,6 +67,19 @@ export default function Sidebar() {
               <ImExit />
               Logout
             </button>
+          </li>
+        </ul>
+        <hr></hr>
+        <h5 className="text-accent/80 mt-4 font-bold text-xl">More</h5>
+        <ul className="py-2">
+          <li className="group hover:bg-main rounded-lg flex gap-2 items-center p-4">
+            <BsQuestionLg className="text-accent/80 text-xl group-hover:text-white" />
+            <Link
+              to="/faq"
+              className="text-accent/80 text-xl font-normal group-hover:text-white"
+            >
+              FAQ
+            </Link>
           </li>
         </ul>
         <hr></hr>
