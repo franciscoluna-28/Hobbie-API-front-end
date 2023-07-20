@@ -1,10 +1,11 @@
-import ActivityCard from "./activityCard";
+import ActivityCard from "./ui/activityCard";
 import ActivitiesLayout from "../layouts/ActivitiesLayout";
 import ActivityAnimation from "./Animation/ActivityAnimation";
 import Button from "./Button";
 import { AiOutlineReload } from "react-icons/ai";
 import { IHobbieExploreActivityWithImage } from "../types/activity";
 import { useRecommendedActivities } from "../hooks/useRecommendedActivities";
+import { PulseLoader } from "react-spinners";
 
 interface RecomendedActivitiesProps {
   token: string;
@@ -21,12 +22,14 @@ export default function RecomendedActivities({
   };
 
   if (status === "loading" && !recommendedActivities) {
-    return <h1>Loading...</h1>;
+    return <PulseLoader color="#00C9A7"/>
   }
 
   if (error) {
     return <h1>There was an error while loading...</h1>;
   }
+
+  console.log(recommendedActivities)
 
   return (
     <div>
