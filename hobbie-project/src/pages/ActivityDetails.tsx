@@ -1,74 +1,49 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { getActivityById } from '../api/activities';
-import { useAuthContext } from '../hooks/useAuthContext';
-import Rate from '../components/ui/activityCard/Rating';
-import { getUserRatingInActivity } from '../api/users';
-import { auth } from '../../firebase/firebase';
+import { useParams } from "react-router-dom";
+import { useAuthContext } from "../hooks/useAuthContext";
+import Rate from "../components/ui/Rating";
+import useRating from "../hooks/useRating";
+import CommentActivityForm from "../components/form/commentActivityForm";
+import ActivityComments from "../components/activityComments";
+import useActivityDetails from "../hooks/useActivityDetails";
+import ActivityDetailsSection from "../components/ui/activityDetailsSection";
+import { PulseLoader } from "react-spinners";
+
+type ActivityParams = {
+  activityId: string;
+};
 
 const ActivityDetails = () => {
-  const { activityId } = useParams();
-  const { token } = useAuthContext();
-  const formattedToken = token || '';
+  const { activityId } = useParams<keyof ActivityParams>() as ActivityParams;
+  const { token, currentUser } = useAuthContext();
+  const formattedToken = token || "";
+  const { selectedActivity, isLoading, status } = useActivityDetails(
+    activityId,
+    formattedToken
+  );
 
-  const [selectedActivity, setSelectedActivity] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [currentRating, setCurrentRating] = useState(0);
-
-  useEffect(() => {
-    const fetchActivity = async () => {
-      try {
-        const activity = await getActivityById(activityId, formattedToken);
-        setSelectedActivity(activity);
-        setLoading(false);
-
-        // Obtenemos el currentRating del usuario en la actividad
-        const ratingResponse = await getUserRatingInActivity(auth.currentUser?.uid, activityId);
-        if (ratingResponse.status === 200) {
-          setCurrentRating(ratingResponse.data); // Actualizamos el estado con el currentRating de la API
-        } else {
-          setCurrentRating(0); // Si no existe el rating, establecemos el valor en 0 por defecto
-        }
-      } catch (error) {
-        setError(true);
-        setLoading(false);
-      }
-    };
-
-    fetchActivity();
-  }, [activityId, formattedToken]);
-
-  if (loading) {
-    return <div>Loading...</div>;
+  /*   const {
+    currentActivityRatingFromUser,
+    totalRatingInActivityFromAllUsers,
+    averageUsersRatingInActivity,
+  } = useRating(activityId);
+ */
+  if (isLoading) {
+    return <PulseLoader className="m-auto" color="#00C9A7" />;
   }
 
-  if (error) {
-    return <div>{error}</div>;
+  if (status === "error") {
+    return <div>There was an error while loading</div>;
   }
 
   if (!selectedActivity) {
     return <div>Activity not found</div>;
   }
 
-  console.log(selectedActivity);
-  console.log(currentRating);
-
   return (
-    <div>
-      {/* Pasamos activityId y currentRating como props a Rate */}
-      <Rate activityId={activityId} currentRating={currentRating} />
-      <h2 className="font-bold text-5xl">{selectedActivity.activity}</h2>
-      {/* Render the rest of the information about the activity here */}
-      <p>{selectedActivity.description}</p>
-      {/* Display the links here */}
-      <h4 className='font-bold text-4xl'>Discover more here</h4>
-      {Object.entries(selectedActivity.links[0]).map(([name, url]) => (
-        <div key={name}>
-          <p>{name}</p>
-          <a href={url}>{url}</a>
-        </div>
-      ))}
+    <div className="flex flex-col">
+      <ActivityDetailsSection {...selectedActivity} />
+      <CommentActivityForm activityId={activityId} />
+      <ActivityComments activityId={activityId} userUid={currentUser.uid} />
     </div>
   );
 };
