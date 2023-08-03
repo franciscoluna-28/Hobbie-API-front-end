@@ -1,10 +1,9 @@
 import axios from "axios";
 import { auth } from "../../firebase/firebase";
-import { CustomActivity } from "../components/Activity";
 
-export function getUserSavedActivities(token: string) {
-  return axios.get<CustomActivity[]>(
-    `http://localhost:3000/api/user/get-activities-by-user/${auth.currentUser?.uid}`,
+export function getUserSavedActivities(token: string, page: number) {
+  return axios.get<IHobbieExploreActivityWithImage[]>(
+    `http://localhost:3000/api/user/get-activities-by-user/${auth.currentUser?.uid}?page=${page}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -12,6 +11,19 @@ export function getUserSavedActivities(token: string) {
     }
   );
 }
+
+export function getUserSavedActivitiesIds(token: string) {
+  return axios.get<any>(
+    `http://localhost:3000/api/user/get-activities-ids/${auth.currentUser?.uid}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+}
+
+
 
 export function deleteActivityFromUser(activityId: string, token: string) {
   return axios.delete(
@@ -24,13 +36,9 @@ export function deleteActivityFromUser(activityId: string, token: string) {
   );
 }
 
-export function getNewRandomActivitiesByKeyword(
-  query: string,
-  token: string,
-  ...activity: CustomActivity[]
-) {
-  return axios.get<CustomActivity[]>(
-    `http://localhost:3000/api/activity/random-with-query/${query}`,
+export function getNewRandomActivitiesByKeyword(query: string, token: string) {
+  return axios.get<IHobbieExploreActivityWithImage[]>(
+    `http://localhost:3000/api/activity/search/${query}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -40,7 +48,7 @@ export function getNewRandomActivitiesByKeyword(
 }
 
 export function getNewRandomActivities(token: string) {
-  return axios.get<CustomActivity[]>(
+  return axios.get<IHobbieExploreActivityWithImage[]>(
     "http://localhost:3000/api/activity/random",
     {
       headers: {
@@ -52,7 +60,7 @@ export function getNewRandomActivities(token: string) {
 
 export function saveActivityUser(uid: string, token: string) {
   return (
-    axios.post<CustomActivity>(
+    axios.post<IHobbieExploreActivityWithImage>(
       `http://localhost:3000/api/user/add-activity-to-user${uid}`
     ),
     {
@@ -61,4 +69,35 @@ export function saveActivityUser(uid: string, token: string) {
       },
     }
   );
+}
+
+export function searchActivityWithQuery(query: string, token: string) {
+  return axios.get<IHobbieExploreActivityWithImage[]>(
+    `http://localhost:3000/api/activity/search?activity=${query}`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+}
+
+
+export async function getActivityById(id: string, token: string) {
+  try {
+    const response = await axios.get<IHobbieExploreActivityWithImage>(
+      `http://localhost:3000/api/activity/get-activity-by-id/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    // Handle any error that occurred during the API call
+    console.error('Error fetching activity:', error);
+    throw error;
+  }
 }
