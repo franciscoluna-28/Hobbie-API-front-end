@@ -13,7 +13,7 @@ export default function SignUp() {
           <h1 className="text-center text-4xl leading-tight font-semibold text-accent">
             Welcome!
           </h1>
-          <span className="block text-center text-accent text-normal">
+          <span className="block text-center text-accent text-sm">
             Hobby Explore | Discover, Share and Connect
           </span>
           <SignUpForm />
