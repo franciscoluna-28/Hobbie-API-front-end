@@ -22,7 +22,6 @@ module.exports = {
         secondaryPurple: "#845EC2",
         secondaryDarkPurple: "#281c3a", 
         accent: "#12141A",
-
         accentHover: "#343a4b",
       },
       keyframes: {
