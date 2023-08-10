@@ -1,9 +1,25 @@
-import Image from 'next/image'
+"use client";
 
-export default function SignUpho() {
+import SignUpForm from "@/components/form/sign-up-form/SignUpForm";
+import LandingPageCarousel from "@/components/ui/landing-page-carousel/LandingPageCarousel";
+
+// Main app route page '/' to handle Signup logic with Firebase
+// Besides the auth form this includes a small carousel of quotes as a detail
+export default function SignUp() {
   return (
-    <main>
-      <h1 className="text-accent font-bold text-5xl p-4 text-center">Welcome!</h1>
+    <main className="">
+      <section className="flex flex-row-reverse overflow-hidden">
+        <div className="flex flex-col w-full p-8">
+          <h1 className="text-center text-4xl leading-tight font-semibold text-accent">
+            Welcome!
+          </h1>
+          <span className="block text-center text-accent text-normal">
+            Hobby Explore | Discover, Share and Connect
+          </span>
+          <SignUpForm />
+        </div>
+        <LandingPageCarousel image="/assets/dog.jpg" />
+      </section>
     </main>
-  )
+  );
 }
