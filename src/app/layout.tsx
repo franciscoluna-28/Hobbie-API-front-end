@@ -1,5 +1,3 @@
-"use client";
-
 import { queryClient } from "@/utils/queryClient";
 import "./globals.css";
 import type { Metadata } from "next";
