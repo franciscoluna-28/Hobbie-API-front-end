@@ -1,5 +1,6 @@
 import SignUpForm from "@/components/form/sign-up-form/SignUpForm";
 import LandingPageCarousel from "@/components/ui/landing-page-carousel/LandingPageCarousel";
+import Link from "next/link";
 
 // Main app route page '/' to handle Signup logic with Firebase
 // Besides the auth form this includes a small carousel of quotes as a detail
@@ -15,6 +16,7 @@ export default function SignUp() {
             Hobby Explore | Discover, Share and Connect
           </span>
           <SignUpForm />
+          <Link href="/login">Go to Login</Link>
         </div>
         <LandingPageCarousel image="/assets/dog.jpg" />
       </section>
