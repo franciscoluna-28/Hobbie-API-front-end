@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { fetchQuotes } from "@/pages/api/quotes";
 import getQueryClient from "@/lib/get-query-client";
-import Quotes from "../quotes";
+import Quotes from "../quotes/Quotes";
 import { dehydrate } from "@tanstack/query-core";
 import Hydrate from "@/components/hydrate-client";
 
