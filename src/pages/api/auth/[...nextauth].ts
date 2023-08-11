@@ -1,3 +1,4 @@
+import { redirect } from 'next/dist/server/api-utils';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -6,7 +7,7 @@ import { auth } from '@/firebase';
 
 export const authOptions = {
   pages: {
-    signIn: "/signin",
+    signIn: "/login",
     signUp: "/",
   },
   providers: [
@@ -22,11 +23,9 @@ export const authOptions = {
           return null;
         }).catch(error => (console.log(error)))
       },
-        
+
     }),
   ],
 };
 
 export default NextAuth(authOptions);
-
-console.log(auth)
