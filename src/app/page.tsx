@@ -1,5 +1,3 @@
-"use client";
-
 import SignUpForm from "@/components/form/sign-up-form/SignUpForm";
 import LandingPageCarousel from "@/components/ui/landing-page-carousel/LandingPageCarousel";
 
