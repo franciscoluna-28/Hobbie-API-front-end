@@ -4,6 +4,5 @@ function Hydrate(props: HydrateProps) {
   return <RQHydrate {...props} />;
 }
 
-const text = "u"
 
 export default Hydrate;
