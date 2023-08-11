@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase";
-import { FirebaseError } from "firebase/app";
+import { useRouter } from "next/navigation";
 
 // Schema to validate the email and the password from firebase
 const formSchema = z.object({
@@ -24,6 +24,7 @@ const formSchema = z.object({
 });
 
 export default function SignUpForm() {
+  const router = useRouter();
   //1) So the first step is to define our form in the component
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -34,9 +35,18 @@ export default function SignUpForm() {
   });
 
   // Afterwards, we create the onSubmit function
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>, e:any) {
     try {
-      createUserWithEmailAndPassword(auth, values.email, values.password);
+      e.preventDefault();
+      const res = await createUserWithEmailAndPassword(
+        auth,
+        values.email,
+        values.password
+      );
+      if (res.user) {
+        console.log(res.user);
+        router.replace("/home");
+      }
     } catch {}
   }
 
