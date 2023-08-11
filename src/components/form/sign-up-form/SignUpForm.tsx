@@ -1,8 +1,6 @@
 "use client";
 
-import Link from "next/link";
-import { useRouter } from "next/router";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
@@ -15,6 +13,9 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/firebase";
+import { FirebaseError } from "firebase/app";
 
 // Schema to validate the email and the password from firebase
 const formSchema = z.object({
@@ -34,9 +35,9 @@ export default function SignUpForm() {
 
   // Afterwards, we create the onSubmit function
   function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+    try {
+      createUserWithEmailAndPassword(auth, values.email, values.password);
+    } catch {}
   }
 
   return (
@@ -72,9 +73,7 @@ export default function SignUpForm() {
               </FormItem>
             )}
           />
-          <Button className="bg-accent hover:bg-black" type="submit">
-            Submit
-          </Button>
+          <Button onClick={() => onSubmit}>Register</Button>
         </form>
       </Form>
     </section>
